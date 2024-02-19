@@ -1,14 +1,20 @@
 <script setup lang="ts">
 
+import type {ItemIdCard} from "~/interface/Items";
+
+defineProps<{
+  item: ItemIdCard
+}>()
+
 </script>
 
 <template>
   <div class="card">
-    <NuxtImg class="card-img" src="/img/card-img.png" alt="img"/>
-    <h4 class="card-title">Футболка</h4>
+    <NuxtImg class="card-img" :src="item.img" alt="img"/>
+    <h4 class="card-title">{{item.name}}</h4>
     <p class="card-price">
       <span class="card-price__discount">$220</span>
-      $129
+      ${{item.price}}
     </p>
   </div>
 </template>
@@ -31,7 +37,8 @@
     line-height: 140%;
     padding: 24px 0 7px;
   }
-  &-price{
+
+  &-price {
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -39,7 +46,8 @@
     font-size: 15px;
     font-weight: 500;
     line-height: 140%;
-    &__discount{
+
+    &__discount {
       text-decoration-line: line-through;
     }
   }

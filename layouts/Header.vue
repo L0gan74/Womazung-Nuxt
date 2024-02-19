@@ -9,13 +9,13 @@
       <NuxtLink to="/">
         Главная
       </NuxtLink>
-      <NuxtLink to="/">
+      <NuxtLink to="/shop">
         Магазин
       </NuxtLink>
-      <NuxtLink to="/">
+      <NuxtLink to="/brand">
         О бренде
       </NuxtLink>
-      <NuxtLink to="/">
+      <NuxtLink to="/contacts">
         Контакты
       </NuxtLink>
     </nav>
@@ -59,7 +59,7 @@
 
 <style scoped lang="scss">
 .header {
-  width: 1300px;
+  width: 1110px;
   margin: 0 auto;
   padding: 50px 0 44px;
   display: flex;
