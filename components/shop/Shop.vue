@@ -5,9 +5,10 @@ import axios from "axios";
 import {onMounted} from "vue";
 import type {Category, ItemsCard} from "~/interface/Items";
 
-const items = ref([])
+const items = ref<ItemsCard[]>([])
+const loading = ref(false)
 
-const categories:Category[] = [
+const categories: Category[] = [
   {id: 1, name: 'Все', categories: "/"},
   {id: 2, name: 'Пальто', categories: "?categories=coat"},
   {id: 3, name: 'Свитшоты', categories: "?categories=sweatshirts"},
@@ -16,8 +17,10 @@ const categories:Category[] = [
 
 const fetchItems = async (category = '') => {
   try {
-    const {data} = await axios.get<ItemsCard[]>(`https://30fc9ac5f1c540d7.mokky.dev/items${category}`)
+    loading.value = true
+    const {data} = await axios.get(`https://30fc9ac5f1c540d7.mokky.dev/items${category}`)
     items.value = data
+    loading.value = false
   } catch (err) {
     console.log(err)
   }
@@ -35,18 +38,28 @@ onMounted(fetchItems)
               type="button"
               v-for="category in categories"
               :key="category.id"
-      @click="fetchItems(category.categories)"
+              @click="fetchItems(category.categories)"
       >
         {{ category.name }}
       </button>
     </div>
-    <p class="shop-length">Показано: 2 из {{ items.length }} товаров</p>
+    <h2 v-if="loading">Загрузка данных...</h2>
+    <div v-else>
+    <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
     <div class="shop-container">
-      <NuxtLink v-for="item in items" :key="item.id" :to="`/card/${item.id}`">
-        <Card :item="item"/>
+      <NuxtLink v-for="item in items" :key="item" :to="`/card/${item.id}`">
+        <div class="card">
+          <NuxtImg class="card-img" :src="item.img" alt="img"/>
+          <h4 class="card-title">{{ item.name }}</h4>
+          <p class="card-price">
+            <span class="card-price__discount">$220</span>
+            ${{ item.price }}
+          </p>
+        </div>
       </NuxtLink>
     </div>
-    <p class="shop-length">Показано: 2 из {{ items.length }} товаров</p>
+    <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
+    </div>
   </div>
 </template>
 
@@ -91,4 +104,38 @@ onMounted(fetchItems)
     padding: 40px 0;
   }
 }
+
+.card {
+  text-align: center;
+
+  &-img {
+    display: block;
+    width: 100%;
+    max-height: 550px;
+    object-fit: cover;
+  }
+
+  &-title {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 140%;
+    padding: 24px 0 7px;
+  }
+
+  &-price {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    color: rgb(153, 142, 120);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 140%;
+
+    &__discount {
+      text-decoration-line: line-through;
+    }
+  }
+}
+
 </style>

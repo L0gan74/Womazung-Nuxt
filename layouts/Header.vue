@@ -6,16 +6,16 @@
   <header class="header">
     <NuxtImg src="/img/logo.svg" width="139"/>
     <nav class="nav">
-      <NuxtLink to="/">
+      <NuxtLink exact-active-class="_active" to="/">
         Главная
       </NuxtLink>
-      <NuxtLink to="/shop">
+      <NuxtLink exact-active-class="_active" to="/shop">
         Магазин
       </NuxtLink>
-      <NuxtLink to="/brand">
+      <NuxtLink exact-active-class="_active" to="/brand">
         О бренде
       </NuxtLink>
-      <NuxtLink to="/contacts">
+      <NuxtLink exact-active-class="_active" to="/contacts">
         Контакты
       </NuxtLink>
     </nav>

@@ -1,20 +1,22 @@
 <script setup lang="ts">
 
-import type {ItemIdCard} from "~/interface/Items";
+import type { ItemsCard} from "~/interface/Items";
 
-defineProps<{
-  item: ItemIdCard
+const props = defineProps<{
+  item: Array<ItemsCard[]>
 }>()
+
+console.log('пропсы',props)
 
 </script>
 
 <template>
-  <div class="card">
+  <div class="card" v-for="card in item">
     <NuxtImg class="card-img" :src="item.img" alt="img"/>
     <h4 class="card-title">{{item.name}}</h4>
     <p class="card-price">
       <span class="card-price__discount">$220</span>
-      ${{item.price}}
+    ${{card.price}}
     </p>
   </div>
 </template>

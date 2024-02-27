@@ -3,7 +3,7 @@
 defineProps<{
   title?: string
   category?: string
-
+  name?: string
 }>()
 
 </script>
@@ -17,6 +17,7 @@ defineProps<{
       </NuxtLink>
     </li>
     <li> — {{ category }}</li>
+    <li> — {{ name }}</li>
   </ul>
 </template>
 

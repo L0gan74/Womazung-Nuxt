@@ -9,6 +9,7 @@ export interface ItemIdCard {
     id: number
     name: string
     price: string
+    oldPrice?: string
     img: string
 }
 
