@@ -6,7 +6,7 @@ import type {ItemIdCard} from "~/interface/Items";
 const route = useRoute()
 
 const item = ref<ItemIdCard | null>(null)
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
 const fetchItem = async () => {
   try {
@@ -24,33 +24,21 @@ onBeforeMount(fetchItem)
 </script>
 
 <template>
-  <Breadcrumb/>
-  <div v-if="loading">
-    <h1>Загрузка данных...</h1>
+  <Breadcrumb  category="Магазин" />
+  <div class="preolader" v-if="loading">
+    <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
   </div>
   <div class="card" v-else>
     <NuxtImg class="card-img" :src="item.img" alt="img"/>
     <div class="card-text">
       <div class="card-text__price">
         <p>$ {{ item.price }}</p>
-        <p>$ {{ item.oldPrice }}</p>
+        <p>{{ item.oldPrice }}</p>
       </div>
       <h4>Выберите размер</h4>
       <div class="card-text__size">
-        <button type="button">
-          S
-        </button>
-        <button type="button">
-          M
-        </button>
-        <button class="_active" type="button">
-          L
-        </button>
-        <button type="button">
-          XL
-        </button>
-        <button type="button">
-          XXL
+        <button type="button" v-for="size in item.sizes">
+          {{size}}
         </button>
       </div>
       <h4>Выберите цвет</h4>
@@ -156,10 +144,11 @@ onBeforeMount(fetchItem)
       }
     }
 
-    &__basket{
+    &__basket {
       display: flex;
       gap: 11px;
-      &-count{
+
+      &-count {
         width: 68px;
         height: 68px;
         border: 1px solid rgb(175, 175, 175);
@@ -169,7 +158,8 @@ onBeforeMount(fetchItem)
         font-size: 20px;
         color: black;
       }
-      button{
+
+      button {
         background: rgb(110, 156, 159);
         width: 268px;
         height: 68px;

@@ -1,5 +1,17 @@
 <script setup lang="ts">
 
+const modal = ref<boolean>(false)
+
+function openModal() {
+  modal.value = true
+  document.body.classList.add("_hidden")
+}
+
+function closeModal() {
+  modal.value = false
+  document.body.classList.remove("_hidden")
+}
+
 </script>
 
 <template>
@@ -20,7 +32,7 @@
       </NuxtLink>
     </nav>
     <div class="nav-right">
-      <NuxtLink>
+      <button type="button" @click="openModal">
         <svg width="14.447693" height="14.451538" viewBox="0 0 14.4477 14.4515" fill="none"
              xmlns="http://www.w3.org/2000/svg"
         >
@@ -30,8 +42,8 @@
                 fill="#6E9C9F" fill-opacity="1.000000" fill-rule="nonzero"/>
         </svg>
         +7 (495) 823-54-12
-      </NuxtLink>
-      <NuxtLink class="basket">
+      </button>
+      <NuxtLink class="basket" to="/basket">
         <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <clipPath id="clip4_500">
@@ -55,6 +67,22 @@
       </NuxtLink>
     </div>
   </header>
+  <div class="modal" v-if="modal">
+    <div class="modal-wrapper">
+      <form class="modal-wrapper__form">
+        <button class="modal-wrapper__form-close" type="button" @click="closeModal">
+          <NuxtImg src="/img/close.svg" alt="close"/>
+        </button>
+        <h3>Заказать обратный звонок</h3>
+        <input type="text" placeholder="Имя">
+        <input type="email" placeholder="E-mail">
+        <input type="tel" placeholder="Телефон">
+        <button class="modal-wrapper__form-submit" type="submit">
+          Заказать звонок
+        </button>
+      </form>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -67,7 +95,8 @@
   align-items: center;
   position: relative;
   z-index: 2;
-  a{
+
+  a {
     color: black;
     font-size: 15px;
     line-height: 140%;
@@ -81,24 +110,82 @@
 
   a {
     transition: .2s linear;
-    &:hover{
+
+    &:hover {
       color: rgb(110 156 159 / 58%);
     }
-    &._active{
+
+    &._active {
       color: rgb(110, 156, 159);
       font-weight: 700;
     }
   }
 
-  &-right{
+  &-right {
     display: flex;
     align-items: center;
     gap: 67px;
-    a{
+
+    button {
       display: flex;
       align-items: center;
       gap: 15px;
     }
   }
 }
+
+.modal {
+  background: rgba(110, 156, 159, 0.631372549);
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-wrapper {
+    width: 491px;
+    padding: 70px;
+    background: white;
+    position: relative;
+
+    &__form {
+      text-align: center;
+
+      &-close {
+        position: absolute;
+        right: 32px;
+        top: 32px;
+      }
+
+      h3 {
+        padding-bottom: 35px;
+      }
+
+      input {
+        color: rgb(134, 134, 134);
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 140%;
+        margin-bottom: 35px;
+        padding-bottom: 15px;
+        border: 0;
+        border-bottom: 1px solid black;
+        width: 100%;
+        outline: none;
+      }
+      &-submit{
+        background: rgb(110, 156, 159);
+        width: 100%;
+        height: 68px;
+        color: white;
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 138.9%;
+      }
+    }
+  }
+}
+
 </style>

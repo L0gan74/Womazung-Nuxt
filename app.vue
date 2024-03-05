@@ -12,8 +12,8 @@ nuxtApp.hook("page:finish", () => {
 </script>
 
 <template>
-  <div v-if="loading">
-    <h1>Загрузка</h1>
+  <div class="preolader" v-if="loading">
+    <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
   </div>
   <NuxtLayout v-else>
     <NuxtPage/>

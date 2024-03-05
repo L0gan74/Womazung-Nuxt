@@ -1,24 +1,27 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends ItemsCard">
 
-import type { ItemsCard} from "~/interface/Items";
+import type {ItemsCard} from "~/interface/Items";
 
-const props = defineProps<{
-  item: Array<ItemsCard[]>
+defineProps<{
+  items: T[]
 }>()
 
-console.log('пропсы',props)
 
 </script>
 
 <template>
-  <div class="card" v-for="card in item">
-    <NuxtImg class="card-img" :src="item.img" alt="img"/>
-    <h4 class="card-title">{{item.name}}</h4>
-    <p class="card-price">
-      <span class="card-price__discount">$220</span>
-    ${{card.price}}
-    </p>
-  </div>
+  <NuxtLink lass="card" v-for="item in items" :key="item.id" :to="`/card/${item.id}`">
+    <div class="card">
+      <div class="card-img">
+        <NuxtImg :src="item.img" alt="img"/>
+      </div>
+      <h4 class="card-title">{{ item.name }}</h4>
+      <p class="card-price">
+        <span class="card-price__discount">$220</span>
+        ${{ item.price }}
+      </p>
+    </div>
+  </NuxtLink>
 </template>
 
 <style scoped lang="scss">
@@ -26,10 +29,28 @@ console.log('пропсы',props)
   text-align: center;
 
   &-img {
-    display: block;
-    width: 100%;
-    max-height: 550px;
-    object-fit: cover;
+    position: relative;
+    transition: background-color 1s ease-in-out;
+    &:hover {
+      &:after {
+        background-color: #6e9c9fa1;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      max-height: 550px;
+      object-fit: cover;
+    }
   }
 
   &-title {

@@ -1,65 +1,32 @@
-<script>
-import {Swiper, SwiperSlide} from 'swiper/vue';
+<script setup lang="ts">
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import {Navigation, Pagination} from 'swiper/modules';
+import axios from "axios";
+import {onMounted} from "vue";
+import Swiper from "~/components/home/Swiper.vue";
+import type {ItemsCard} from "~/interface/Items";
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  setup() {
-    return {
-      modules: [Navigation, Pagination],
-    };
-  },
-};
+const items = ref<ItemsCard[]>([])
+const loading = ref<boolean>(false)
+
+const fetchItems = async () => {
+  try {
+    loading.value = true
+    const {data} = await axios.get('https://30fc9ac5f1c540d7.mokky.dev/items?limit=3')
+    items.value = data.items
+    console.log(data)
+    loading.value = false
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(fetchItems)
+
 </script>
 
 <template>
   <div class="receipts">
-    <swiper :pagination="{
-      clickable: true,
-    }" :modules="modules" :grabCursor="true" class="receipts-swiper">
-      <swiper-slide>
-        <div class="receipts-text">
-          <h1>
-            Новые поступления
-            в этом сезоне
-          </h1>
-          <p>Утонченные сочетания и бархатные оттенки - вот то, что вы искали в этом сезоне. Время исследовать.</p>
-          <NuxtLink to="">
-            Открыть магазин
-          </NuxtLink>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="receipts-text">
-          <h1>
-            Новые поступления
-            в этом сезоне
-          </h1>
-          <p>Утонченные сочетания и бархатные оттенки - вот то, что вы искали в этом сезоне. Время исследовать.</p>
-          <NuxtLink to="">
-            Открыть магазин
-          </NuxtLink>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="receipts-text">
-          <h1>
-            Новые поступления
-            в этом сезоне
-          </h1>
-          <p>Утонченные сочетания и бархатные оттенки - вот то, что вы искали в этом сезоне. Время исследовать.</p>
-          <NuxtLink to="">
-            Открыть магазин
-          </NuxtLink>
-        </div>
-      </swiper-slide>
-    </swiper>
+    <Swiper/>
     <div class="receipts-images">
       <NuxtImg src="/img/receipts-main.png" alt="img"/>
       <NuxtImg src="/img/receipts-2.png" alt="img"/>
@@ -69,11 +36,9 @@ export default {
   <div class="collection">
     <h2>Новая коллекция</h2>
     <div class="collection-container">
-      <Card/>
-      <Card/>
-      <Card/>
+      <Card :items="items"/>
     </div>
-    <NuxtLink class="collection-link" to="">
+    <NuxtLink class="collection-link" to="/shop">
       Открыть магазин
     </NuxtLink>
   </div>
@@ -119,7 +84,7 @@ export default {
         </p>
         <p>Womazing ищет эти мелочи и создает прекрасные вещи, которые выгодно подчеркивают достоинства каждой
           девушки.</p>
-        <NuxtLink to="">
+        <NuxtLink to="/brand">
           Подробнее о бренде
         </NuxtLink>
       </div>
@@ -127,7 +92,7 @@ export default {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .receipts {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -280,7 +245,7 @@ export default {
     grid-gap: 124px;
     align-items: center;
 
-    &__img{
+    &__img {
       display: block;
       width: 100%;
       object-fit: cover;
@@ -305,6 +270,39 @@ export default {
         font-weight: 500;
         line-height: 140%;
       }
+    }
+  }
+}
+
+.card {
+  text-align: center;
+
+  &-img {
+    display: block;
+    width: 100%;
+    max-height: 550px;
+    object-fit: cover;
+  }
+
+  &-title {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 140%;
+    padding: 24px 0 7px;
+  }
+
+  &-price {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    color: rgb(153, 142, 120);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 140%;
+
+    &__discount {
+      text-decoration-line: line-through;
     }
   }
 }

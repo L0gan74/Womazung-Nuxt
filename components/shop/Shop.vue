@@ -6,7 +6,7 @@ import {onMounted} from "vue";
 import type {Category, ItemsCard} from "~/interface/Items";
 
 const items = ref<ItemsCard[]>([])
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
 const categories: Category[] = [
   {id: 1, name: 'Все', categories: "/"},
@@ -43,22 +43,15 @@ onMounted(fetchItems)
         {{ category.name }}
       </button>
     </div>
-    <h2 v-if="loading">Загрузка данных...</h2>
-    <div v-else>
-    <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
-    <div class="shop-container">
-      <NuxtLink v-for="item in items" :key="item" :to="`/card/${item.id}`">
-        <div class="card">
-          <NuxtImg class="card-img" :src="item.img" alt="img"/>
-          <h4 class="card-title">{{ item.name }}</h4>
-          <p class="card-price">
-            <span class="card-price__discount">$220</span>
-            ${{ item.price }}
-          </p>
-        </div>
-      </NuxtLink>
+    <div class="preolader" v-if="loading">
+      <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
     </div>
-    <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
+    <div v-else>
+      <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
+      <div class="shop-container">
+        <Card :items="items"/>
+      </div>
+      <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
     </div>
   </div>
 </template>

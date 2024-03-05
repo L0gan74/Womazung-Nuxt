@@ -1,0 +1,4 @@
+<template>
+  <Basket/>
+</template>
+
