@@ -5,7 +5,18 @@
 <template>
   <footer class="footer">
     <div class="footer-container">
-      footer
+      <NuxtLink exact-active-class="_active" to="/">
+        Главная
+      </NuxtLink>
+      <NuxtLink exact-active-class="_active" to="/shop">
+        Магазин
+      </NuxtLink>
+      <NuxtLink exact-active-class="_active" to="/brand">
+        О бренде
+      </NuxtLink>
+      <NuxtLink exact-active-class="_active" to="/contacts">
+        Контакты
+      </NuxtLink>
     </div>
   </footer>
 </template>
@@ -16,8 +27,25 @@
   padding: 104px 0 97px;
 
   &-container {
-    width: 1300px;
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
     margin: 0 auto;
+    a {
+      transition: .2s linear;
+      color: black;
+      font-size: 15px;
+      line-height: 140%;
+
+      &:hover {
+        color: rgb(110 156 159 / 58%);
+      }
+
+      &._active {
+        color: rgb(110, 156, 159);
+        font-weight: 700;
+      }
+    }
   }
 }
 </style>

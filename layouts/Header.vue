@@ -100,7 +100,6 @@ function closeModal() {
     color: black;
     font-size: 15px;
     line-height: 140%;
-    cursor: pointer;
   }
 }
 

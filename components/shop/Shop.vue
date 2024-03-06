@@ -9,11 +9,19 @@ const items = ref<ItemsCard[]>([])
 const loading = ref<boolean>(false)
 
 const categories: Category[] = [
-  {id: 1, name: 'Все', categories: "/"},
-  {id: 2, name: 'Пальто', categories: "?categories=coat"},
-  {id: 3, name: 'Свитшоты', categories: "?categories=sweatshirts"},
-  {id: 4, name: 'Футболки', categories: "?categories=t-shirt"},
+  {id: 1, name: 'Все', categories: "/", isActive: true},
+  {id: 2, name: 'Пальто', categories: "?categories=coat", isActive: false},
+  {id: 3, name: 'Свитшоты', categories: "?categories=sweatshirts", isActive: false},
+  {id: 4, name: 'Футболки', categories: "?categories=t-shirt", isActive: false},
 ]
+
+
+const toggleCategory = (selectedCategory:Category) => {
+  categories.forEach(category => {
+    category.isActive = category === selectedCategory;
+  });
+  fetchItems(selectedCategory.categories);
+};
 
 const fetchItems = async (category = '') => {
   try {
@@ -34,11 +42,11 @@ onMounted(fetchItems)
   <div class="shop">
     <Breadcrumb title="Магазин" category="Магазин"/>
     <div class="shop-categories">
-      <button class="_active"
+      <button v-for="category in categories"
+              :class="{'_active' : category.isActive}"
               type="button"
-              v-for="category in categories"
               :key="category.id"
-              @click="fetchItems(category.categories)"
+              @click="toggleCategory(category)"
       >
         {{ category.name }}
       </button>

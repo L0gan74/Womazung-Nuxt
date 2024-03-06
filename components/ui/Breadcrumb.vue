@@ -17,7 +17,7 @@ defineProps<{
       </NuxtLink>
     </li>
     <li> — {{ category }}</li>
-    <li> — {{ name }}</li>
+
   </ul>
 </template>
 

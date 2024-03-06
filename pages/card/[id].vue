@@ -12,7 +12,7 @@ const fetchItem = async () => {
   try {
     loading.value = true
     const {data} = await axios.get<ItemIdCard>(`https://30fc9ac5f1c540d7.mokky.dev/items/${route.params.id}`)
-    item.value = data
+    item.value = data as ItemIdCard
     loading.value = false
   } catch (err) {
     console.log(err)
@@ -24,45 +24,38 @@ onBeforeMount(fetchItem)
 </script>
 
 <template>
-  <Breadcrumb  category="Магазин" />
+  <Breadcrumb category="Магазин"/>
   <div class="preolader" v-if="loading">
     <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
   </div>
-  <div class="card" v-else>
-    <NuxtImg class="card-img" :src="item.img" alt="img"/>
-    <div class="card-text">
-      <div class="card-text__price">
-        <p>$ {{ item.price }}</p>
-        <p>{{ item.oldPrice }}</p>
-      </div>
-      <h4>Выберите размер</h4>
-      <div class="card-text__size">
-        <button type="button" v-for="size in item.sizes">
-          {{size}}
-        </button>
-      </div>
-      <h4>Выберите цвет</h4>
-      <div class="card-text__colors">
-        <button style="background: gray" type="button">
-
-        </button>
-        <button class="_active" style="background: red" type="button">
-
-        </button>
-        <button style="background: yellow" type="button">
-
-        </button>
-        <button style="background: purple" type="button">
-
-        </button>
-      </div>
-      <div class="card-text__basket">
-        <div class="card-text__basket-count">
-          1
+  <div v-else>
+    <h1>{{ item?.name }}</h1>
+    <div class="card">
+      <NuxtImg class="card-img" :src="item?.img" alt="img"/>
+      <div class="card-text">
+        <div class="card-text__price">
+          <p>$ {{ item?.price }}</p>
+          <p>{{ item?.oldPrice }}</p>
         </div>
-        <button type="button">
-          Добавить в корзину
-        </button>
+        <h4>Выберите размер</h4>
+        <div class="card-text__size">
+          <button type="button" v-for="size in item?.sizes">
+            {{ size }}
+          </button>
+        </div>
+        <h4>Выберите цвет</h4>
+        <div class="card-text__colors">
+          <button v-for="color in item?.colors" :style="{'background': color}" type="button">
+          </button>
+        </div>
+        <div class="card-text__basket">
+          <div class="card-text__basket-count">
+            1
+          </div>
+          <button type="button">
+            Добавить в корзину
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -70,6 +63,9 @@ onBeforeMount(fetchItem)
 </template>
 
 <style scoped lang="scss">
+h1{
+  padding-bottom: 50px;
+}
 .card {
   display: flex;
   align-items: center;

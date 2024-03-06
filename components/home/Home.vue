@@ -13,7 +13,6 @@ const fetchItems = async () => {
     loading.value = true
     const {data} = await axios.get('https://30fc9ac5f1c540d7.mokky.dev/items?limit=3')
     items.value = data.items
-    console.log(data)
     loading.value = false
   } catch (err) {
     console.log(err)
