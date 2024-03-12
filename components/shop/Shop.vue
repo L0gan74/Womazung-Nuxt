@@ -3,10 +3,12 @@
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 import axios from "axios";
 import {onMounted} from "vue";
-import type {Category, ItemsCard} from "~/interface/Items";
+import type {Category, ItemIdCard, ItemsCard} from "~/interface/Items";
+import { provide, ref } from 'vue'
 
 const items = ref<ItemsCard[]>([])
 const loading = ref<boolean>(false)
+const cart = ref([])
 
 const categories: Category[] = [
   {id: 1, name: 'Все', categories: "/", isActive: true},
@@ -15,8 +17,13 @@ const categories: Category[] = [
   {id: 4, name: 'Футболки', categories: "?categories=t-shirt", isActive: false},
 ]
 
+type FunctionType = <ItemIdCard>(item: ItemIdCard) => void;
+const addToCart: FunctionType = (item) => {
+  // cart.value.push(item)
+  console.log(123)
+}
 
-const toggleCategory = (selectedCategory:Category) => {
+const toggleCategory = (selectedCategory: Category) => {
   categories.forEach(category => {
     category.isActive = category === selectedCategory;
   });
@@ -29,12 +36,16 @@ const fetchItems = async (category = '') => {
     const {data} = await axios.get(`https://30fc9ac5f1c540d7.mokky.dev/items${category}`)
     items.value = data
     loading.value = false
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
   }
 }
 
 onMounted(fetchItems)
+
+provide("main", {
+  addToCart
+})
 
 </script>
 
@@ -57,7 +68,7 @@ onMounted(fetchItems)
     <div v-else>
       <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
       <div class="shop-container">
-        <Card :items="items"/>
+        <Card :items="items" @addToCart="addToCart"/>
       </div>
       <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
     </div>

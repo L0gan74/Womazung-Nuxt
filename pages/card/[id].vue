@@ -2,11 +2,15 @@
 import axios from "axios";
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 import type {ItemIdCard} from "~/interface/Items";
+import { inject, ref } from 'vue'
 
 const route = useRoute()
 
 const item = ref<ItemIdCard | null>(null)
 const loading = ref<boolean>(false)
+
+
+const addToCart = inject('main')
 
 const fetchItem = async () => {
   try {
@@ -39,20 +43,23 @@ onBeforeMount(fetchItem)
         </div>
         <h4>Выберите размер</h4>
         <div class="card-text__size">
-          <button type="button" v-for="size in item?.sizes">
+          <button type="button"
+                  v-for="size in item?.sizes"
+                  :key="size"
+          >
             {{ size }}
           </button>
         </div>
         <h4>Выберите цвет</h4>
         <div class="card-text__colors">
-          <button v-for="color in item?.colors" :style="{'background': color}" type="button">
+          <button v-for="color in item?.colors" :key="item" :style="{'background': color}" type="button">
           </button>
         </div>
         <div class="card-text__basket">
           <div class="card-text__basket-count">
             1
           </div>
-          <button type="button">
+          <button type="button" @click="addToCart">
             Добавить в корзину
           </button>
         </div>
@@ -86,6 +93,7 @@ h1{
       font-weight: 500;
       color: black;
       padding-bottom: 34px;
+      text-align: left;
     }
 
     &__price {

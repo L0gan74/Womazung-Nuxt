@@ -1,6 +1,10 @@
 <script setup lang="ts">
 
+import {Form, Field, ErrorMessage} from 'vee-validate';
+import * as yup from 'yup';
+
 const modal = ref<boolean>(false)
+const backModal = ref<boolean>(false)
 
 function openModal() {
   modal.value = true
@@ -11,6 +15,27 @@ function closeModal() {
   modal.value = false
   document.body.classList.remove("_hidden")
 }
+
+const schema = yup.object({
+  name: yup.string().required("Введите Имя").min(3),
+  email: yup.string().required("Введите Почту").email(),
+  phone: yup.string().required("Введите Телефон").min(11),
+});
+
+function onSubmit() {
+  modal.value = false
+  backModal.value = true
+  setTimeout(() => {
+    backModal.value = false
+    document.body.classList.remove("_hidden")
+  }, 5000)
+}
+
+function closeBackModal() {
+  backModal.value = false
+  document.body.classList.remove("_hidden")
+}
+
 
 </script>
 
@@ -69,18 +94,27 @@ function closeModal() {
   </header>
   <div class="modal" v-if="modal">
     <div class="modal-wrapper">
-      <form class="modal-wrapper__form">
+      <Form @submit="onSubmit" :validation-schema="schema" class="modal-wrapper__form">
         <button class="modal-wrapper__form-close" type="button" @click="closeModal">
           <NuxtImg src="/img/close.svg" alt="close"/>
         </button>
         <h3>Заказать обратный звонок</h3>
-        <input type="text" placeholder="Имя">
-        <input type="email" placeholder="E-mail">
-        <input type="tel" placeholder="Телефон">
+        <Field type="text" name="name" placeholder="Имя"/>
+        <ErrorMessage name="name"/>
+        <Field type="email" name="email" placeholder="E-mail"/>
+        <ErrorMessage name="email"/>
+        <Field type="tel" name="phone" placeholder="Телефон"/>
+        <ErrorMessage name="phone"/>
         <button class="modal-wrapper__form-submit" type="submit">
           Заказать звонок
         </button>
-      </form>
+      </Form>
+    </div>
+  </div>
+  <div class="modal" v-if="backModal">
+    <div class="modal-wrapper _back">
+      <h3>Отлично! Мы скоро вам перезвоним.</h3>
+      <button @click="closeBackModal" type="button">Закрыть</button>
     </div>
   </div>
 </template>
@@ -138,7 +172,7 @@ function closeModal() {
   height: 100vh;
   width: 100%;
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,6 +182,21 @@ function closeModal() {
     padding: 70px;
     background: white;
     position: relative;
+
+    &._back {
+      width: auto;
+
+      button {
+        border: 1px solid rgb(110, 156, 159);
+        width: 168px;
+        height: 68px;
+        color: rgb(110, 156, 159);
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 138.9%;
+        margin: 35px auto 0;
+      }
+    }
 
     &__form {
       text-align: center;
@@ -174,7 +223,13 @@ function closeModal() {
         width: 100%;
         outline: none;
       }
-      &-submit{
+
+      span {
+        display: block;
+        padding-bottom: 15px;
+      }
+
+      &-submit {
         background: rgb(110, 156, 159);
         width: 100%;
         height: 68px;
