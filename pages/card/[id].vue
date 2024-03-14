@@ -2,16 +2,20 @@
 import axios from "axios";
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 import type {ItemIdCard} from "~/interface/Items";
-import { inject, ref } from 'vue'
+import {inject, ref} from 'vue'
 
 const route = useRoute()
 
+useHead({
+  meta: [
+    {
+      name: 'description', content: `wrgwgwgwrgwrg - `
+    }
+  ]
+})
+
 const item = ref<ItemIdCard | null>(null)
 const loading = ref<boolean>(false)
-
-
-const addToCart = inject('main')
-
 const fetchItem = async () => {
   try {
     loading.value = true
@@ -34,7 +38,7 @@ onBeforeMount(fetchItem)
   </div>
   <div v-else>
     <h1>{{ item?.name }}</h1>
-    <div class="card">
+    <div class="card" :key="item?.id">
       <NuxtImg class="card-img" :src="item?.img" alt="img"/>
       <div class="card-text">
         <div class="card-text__price">
@@ -70,9 +74,10 @@ onBeforeMount(fetchItem)
 </template>
 
 <style scoped lang="scss">
-h1{
+h1 {
   padding-bottom: 50px;
 }
+
 .card {
   display: flex;
   align-items: center;

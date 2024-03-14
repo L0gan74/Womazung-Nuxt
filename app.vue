@@ -1,6 +1,16 @@
 <script setup>
 import './assets/scss/main.scss'
 
+useHead({
+  title: "Одежда и аксессуары | Womazing",
+  meta: [
+    {
+      name: 'description',
+      content: 'Купить модную мужскую и женскую одежду, обувь, аксессуары и многое другое в нашем интернет-магазине одежды.',
+    }
+  ]
+})
+
 const nuxtApp = useNuxtApp();
 const loading = ref(false);
 nuxtApp.hook("page:start", () => {
@@ -16,6 +26,6 @@ nuxtApp.hook("page:finish", () => {
     <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
   </div>
   <NuxtLayout v-else>
-    <NuxtPage/>
+    <RouterView/>
   </NuxtLayout>
 </template>

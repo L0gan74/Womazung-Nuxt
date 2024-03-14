@@ -8,7 +8,8 @@ import { provide, ref } from 'vue'
 
 const items = ref<ItemsCard[]>([])
 const loading = ref<boolean>(false)
-const cart = ref([])
+const cashe = new Map()
+// const cart = ref([])
 
 const categories: Category[] = [
   {id: 1, name: 'Все', categories: "/", isActive: true},
@@ -17,11 +18,14 @@ const categories: Category[] = [
   {id: 4, name: 'Футболки', categories: "?categories=t-shirt", isActive: false},
 ]
 
+
+
 type FunctionType = <ItemIdCard>(item: ItemIdCard) => void;
-const addToCart: FunctionType = (item) => {
-  // cart.value.push(item)
-  console.log(123)
-}
+// const addToCart: FunctionType = (item) => {
+//   // cart.value.push(item)
+//   console.log(123)
+// }
+
 
 const toggleCategory = (selectedCategory: Category) => {
   categories.forEach(category => {
@@ -33,8 +37,14 @@ const toggleCategory = (selectedCategory: Category) => {
 const fetchItems = async (category = '') => {
   try {
     loading.value = true
-    const {data} = await axios.get(`https://30fc9ac5f1c540d7.mokky.dev/items${category}`)
-    items.value = data
+    if(cashe.has(category)){
+      items.value = cashe.get(category)
+    } else{
+      const {data} = await axios.get(`https://30fc9ac5f1c540d7.mokky.dev/items${category}`)
+      items.value = data
+      cashe.set(category, data)
+    }
+
     loading.value = false
   } catch (error) {
     console.log(error)
@@ -43,9 +53,9 @@ const fetchItems = async (category = '') => {
 
 onMounted(fetchItems)
 
-provide("main", {
-  addToCart
-})
+// provide("main", {
+//   addToCart
+// })
 
 </script>
 
@@ -68,7 +78,8 @@ provide("main", {
     <div v-else>
       <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
       <div class="shop-container">
-        <Card :items="items" @addToCart="addToCart"/>
+<!--        <Card :items="items" @addToCart="addToCart"/>-->
+        <Card :items="items"/>
       </div>
       <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
     </div>

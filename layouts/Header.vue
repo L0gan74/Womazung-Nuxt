@@ -36,6 +36,13 @@ function closeBackModal() {
   document.body.classList.remove("_hidden")
 }
 
+function logout() {
+  localStorage.removeItem("token")
+  localStorage.removeItem("fullName")
+  location.reload()
+}
+
+const thereToken = localStorage.getItem('token')
 
 </script>
 
@@ -55,6 +62,10 @@ function closeBackModal() {
       <NuxtLink exact-active-class="_active" to="/contacts">
         Контакты
       </NuxtLink>
+      <NuxtLink exact-active-class="_active" to="/login">
+        Авторизация
+      </NuxtLink>
+      <button v-if="thereToken" @click="logout" type="submit">Выйти</button>
     </nav>
     <div class="nav-right">
       <button type="button" @click="openModal">
