@@ -26,6 +26,6 @@ nuxtApp.hook("page:finish", () => {
     <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
   </div>
   <NuxtLayout v-else>
-    <RouterView/>
+    <NuxtPage/>
   </NuxtLayout>
 </template>
