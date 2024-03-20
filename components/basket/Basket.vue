@@ -1,6 +1,13 @@
 <script setup lang="ts">
 
+import {inject} from 'vue'
+
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
+
+const {cartBasket, removeFromCart, totalPrice} = inject("location")
+
+console.log(cartBasket)
+
 </script>
 
 <template>
@@ -9,60 +16,34 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
     <div class="basket-top">
       <p>Товар</p>
       <p>Цена</p>
-      <p>Количество</p>
-      <p>Всего</p>
     </div>
-    <div class="basket-goods">
+    <h2 class="basket-empty" v-if="cartBasket == 0">Корзина пустая</h2>
+    <div class="basket-goods" v-for="item in cartBasket">
       <div class="basket-goods__items">
-        <button type="button">
+        <button type="button" @click="() => removeFromCart(item)">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20px" height="20px">
             <path
                 d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"/>
           </svg>
         </button>
-        <NuxtImg src="https://files.gifts.ru/reviewer/tb/13/6140.60_73_500.jpg" alt="preloader"/>
-        <p>Футболка USA</p>
+        <NuxtImg :src="item.img" alt="preloader"/>
+        <p>{{ item.name }}</p>
       </div>
-      <p>$129</p>
-      <div class="basket-goods__count">
-        1
-      </div>
-      <p>$129</p>
-    </div>
-    <div class="basket-goods">
-      <div class="basket-goods__items">
-        <button type="button">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20px" height="20px">
-            <path
-                d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"/>
-          </svg>
-        </button>
-        <NuxtImg src="https://files.gifts.ru/reviewer/tb/13/6140.60_73_500.jpg" alt="preloader"/>
-        <p>Футболка USA</p>
-      </div>
-      <p>$129</p>
-      <div class="basket-goods__count">
-        1
-      </div>
-      <p>$129</p>
+      <p>${{ item.price }}</p>
     </div>
     <div class="basket-refresh">
-      <div class="basket-refresh__form">
+      <form class="basket-refresh__form">
         <input type="text" placeholder="Введите купон">
-        <button type="submit">Применить купон</button>
-      </div>
-      <button class="basket-refresh__button" type="button">Обновить корзину</button>
+        <button type="button">Применить купон</button>
+      </form>
     </div>
     <div class="basket-price">
-      <p class="basket-price__subtotal">
-        Подытог: <span>$129</span>
-      </p>
       <div class="basket-price__bottom">
         <div class="basket-price__bottom-total">
           <p>Итого:</p>
-          <p>$129</p>
+          <p>${{ totalPrice }}</p>
         </div>
-        <button type="button">Оформить заказ</button>
+        <NuxtLink to="/payment" :disabled="cartBasket == 0">Оформить заказ</NuxtLink>
       </div>
     </div>
   </div>
@@ -81,14 +62,19 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 
   &-top {
     display: grid;
-    grid-template-columns: 40% 20% 20% 20%;
+    grid-template-columns: repeat(2, 1fr);
     border-bottom: 1px solid rgb(204, 204, 204);
     padding-bottom: 25px;
   }
 
+  &-empty {
+    text-align: center;
+    padding: 80px 0;
+  }
+
   &-goods {
     display: grid;
-    grid-template-columns: 40% 20% 20% 20%;
+    grid-template-columns: repeat(2, 1fr);
     align-items: center;
     margin: 72px 0;
 
@@ -103,16 +89,6 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
         object-fit: cover;
         display: block;
       }
-    }
-
-    &__count {
-      width: 47px;
-      height: 47px;
-      border: 1px solid rgb(175, 175, 175);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
     }
   }
 
@@ -135,7 +111,8 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
         border-bottom: 1px solid black;
         outline: none;
       }
-      button{
+
+      button {
         border: 1px solid rgb(110, 156, 159);
         width: 248px;
         height: 68px;
@@ -143,30 +120,18 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
         font-size: 17px;
       }
     }
-    &__button{
-      border: 1px solid rgb(110, 156, 159);
-      width: 248px;
-      height: 68px;
-      color: rgb(110, 156, 159);
-      font-size: 17px;
-    }
   }
 
-  &-price{
+  &-price {
     width: 538px;
     margin-left: 0;
-    &__subtotal{
-      font-size: 17px !important;
-      padding-bottom: 28px;
-      span{
-        padding-left: 10px;
-      }
-    }
-    &__bottom{
+
+    &__bottom {
       display: flex;
       align-items: center;
       gap: 15px;
-      &-total{
+
+      &-total {
         background: rgb(241, 234, 220);
         display: flex;
         align-items: center;
@@ -174,12 +139,17 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
         padding: 0 25px;
         width: 287px;
         height: 68px;
-        p{
+
+        p {
           font-size: 25px;
           font-weight: 500;
         }
       }
-      button{
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background: rgb(110, 156, 159);
         width: 236px;
         height: 68px;

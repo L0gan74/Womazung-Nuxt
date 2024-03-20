@@ -4,18 +4,21 @@ import axios from "axios";
 import {onMounted} from "vue";
 import Swiper from "~/components/home/Swiper.vue";
 import type {ItemsCard} from "~/interface/Items";
+import {useItemsStore} from "../../stores/items"
 
 const items = ref<ItemsCard[]>([])
 const loading = ref<boolean>(false)
+const itemsStore = useItemsStore()
 
 const fetchItems = async () => {
   try {
     loading.value = true
     const {data} = await axios.get('https://30fc9ac5f1c540d7.mokky.dev/items?limit=3')
     items.value = data.items
-    loading.value = false
   } catch (err) {
     console.log(err)
+  } finally {
+    loading.value = false
   }
 }
 

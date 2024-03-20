@@ -39,7 +39,7 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 
 <style scoped lang="scss">
 .brand {
-  margin: 196px 0 130px;
+  margin: 100px 0 130px;
 
   &-item {
     display: grid;

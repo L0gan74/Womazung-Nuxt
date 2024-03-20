@@ -48,7 +48,9 @@ const thereToken = localStorage.getItem('token')
 
 <template>
   <header class="header">
-    <NuxtImg src="/img/logo.svg" width="139"/>
+    <NuxtLink to="/">
+      <NuxtImg src="/img/logo.svg" width="139"/>
+    </NuxtLink>
     <nav class="nav">
       <NuxtLink exact-active-class="_active" to="/">
         Главная

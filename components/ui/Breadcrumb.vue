@@ -3,7 +3,9 @@
 defineProps<{
   title?: string
   category?: string
+  categoryLink?: string
   name?: string
+  nameItem?: string
 }>()
 
 </script>
@@ -11,12 +13,17 @@ defineProps<{
 <template>
   <h1 class="title">{{ title }}</h1>
   <ul class="breadcrumb">
-    <li>
+    <li class="breadcrumb-first">
       <NuxtLink to="/">
         Главная
       </NuxtLink>
     </li>
-    <li> — {{ category }}</li>
+    <li> —
+      <NuxtLink :to="`/${categoryLink}`">{{ category }}</NuxtLink>
+    </li>
+    <li v-if="nameItem"> —
+      {{ nameItem }}
+    </li>
 
   </ul>
 </template>
@@ -29,20 +36,17 @@ defineProps<{
 .breadcrumb {
   display: flex;
   gap: 5px;
-  padding-bottom: 102px;
+  padding-bottom: 60px;
+
+  &-first a {
+    color: black !important;
+  }
 
   li, a {
-    color: black;
+    color: rgb(145, 145, 145);
     font-size: 17px;
     font-weight: 500;
     line-height: 140%;
-  }
-
-  li {
-    &:last-child {
-      color: rgb(145, 145, 145);
-
-    }
   }
 }
 </style>

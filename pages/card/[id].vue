@@ -2,20 +2,22 @@
 import axios from "axios";
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 import type {ItemIdCard} from "~/interface/Items";
-import {inject, ref} from 'vue'
+import {ref} from 'vue'
 
 const route = useRoute()
+
 
 useHead({
   meta: [
     {
-      name: 'description', content: `wrgwgwgwrgwrg - `
+      name: 'description', content: `item card id`
     }
   ]
 })
 
 const item = ref<ItemIdCard | null>(null)
 const loading = ref<boolean>(false)
+
 const fetchItem = async () => {
   try {
     loading.value = true
@@ -29,10 +31,13 @@ const fetchItem = async () => {
 
 onBeforeMount(fetchItem)
 
+const {addToCart} = inject("location")
+
+
 </script>
 
 <template>
-  <Breadcrumb category="Магазин"/>
+  <Breadcrumb category="Магазин" category-link="shop" :name-item="`${item?.name}`"/>
   <div class="preolader" v-if="loading">
     <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
   </div>
@@ -59,14 +64,9 @@ onBeforeMount(fetchItem)
           <button v-for="color in item?.colors" :key="item" :style="{'background': color}" type="button">
           </button>
         </div>
-        <div class="card-text__basket">
-          <div class="card-text__basket-count">
-            1
-          </div>
-          <button type="button" @click="addToCart">
-            Добавить в корзину
-          </button>
-        </div>
+        <button class="card-text__button" type="button" @click="() => addToCart(item)">
+          Добавить в корзину
+        </button>
       </div>
     </div>
   </div>
@@ -153,28 +153,12 @@ h1 {
       }
     }
 
-    &__basket {
-      display: flex;
-      gap: 11px;
-
-      &-count {
-        width: 68px;
-        height: 68px;
-        border: 1px solid rgb(175, 175, 175);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 20px;
-        color: black;
-      }
-
-      button {
-        background: rgb(110, 156, 159);
-        width: 268px;
-        height: 68px;
-        font-size: 17px;
-        color: white;
-      }
+    &__button {
+      background: rgb(110, 156, 159);
+      width: 268px;
+      height: 68px;
+      font-size: 17px;
+      color: white;
     }
   }
 }

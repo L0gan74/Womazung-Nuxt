@@ -6,11 +6,10 @@ defineProps<{
   items: T[]
 }>()
 
-
 </script>
 
 <template>
-  <NuxtLink lass="card" v-for="item in items" :key="item.id" :to="`/card/${item.id}`">
+  <NuxtLink v-for="item in items" :key="item.id" :to="`/card/${item.id}`">
     <div class="card">
       <div class="card-img">
         <NuxtImg :src="item.img" alt="img"/>

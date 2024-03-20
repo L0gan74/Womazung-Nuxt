@@ -9,7 +9,6 @@ import { provide, ref } from 'vue'
 const items = ref<ItemsCard[]>([])
 const loading = ref<boolean>(false)
 const cashe = new Map()
-// const cart = ref([])
 
 const categories: Category[] = [
   {id: 1, name: 'Все', categories: "/", isActive: true},
@@ -17,14 +16,6 @@ const categories: Category[] = [
   {id: 3, name: 'Свитшоты', categories: "?categories=sweatshirts", isActive: false},
   {id: 4, name: 'Футболки', categories: "?categories=t-shirt", isActive: false},
 ]
-
-
-
-type FunctionType = <ItemIdCard>(item: ItemIdCard) => void;
-// const addToCart: FunctionType = (item) => {
-//   // cart.value.push(item)
-//   console.log(123)
-// }
 
 
 const toggleCategory = (selectedCategory: Category) => {
@@ -44,24 +35,20 @@ const fetchItems = async (category = '') => {
       items.value = data
       cashe.set(category, data)
     }
-
-    loading.value = false
   } catch (error) {
     console.log(error)
+  } finally {
+    loading.value = false
   }
 }
 
 onMounted(fetchItems)
 
-// provide("main", {
-//   addToCart
-// })
-
 </script>
 
 <template>
   <div class="shop">
-    <Breadcrumb title="Магазин" category="Магазин"/>
+    <Breadcrumb title="Магазин" category="Магазин" category-link="shop"/>
     <div class="shop-categories">
       <button v-for="category in categories"
               :class="{'_active' : category.isActive}"
@@ -78,7 +65,6 @@ onMounted(fetchItems)
     <div v-else>
       <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
       <div class="shop-container">
-<!--        <Card :items="items" @addToCart="addToCart"/>-->
         <Card :items="items"/>
       </div>
       <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
@@ -88,7 +74,7 @@ onMounted(fetchItems)
 
 <style scoped lang="scss">
 .shop {
-  margin: 196px 0 130px;
+  margin: 100px 0 130px;
 
   &-categories {
     padding-bottom: 40px;
