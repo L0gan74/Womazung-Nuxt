@@ -40,7 +40,7 @@ onMounted(fetchItems)
     <div class="collection-container">
       <Card :items="items"/>
     </div>
-    <NuxtLink class="collection-link" to="/shop">
+    <NuxtLink class="collection-link transparent" to="/shop">
       Открыть магазин
     </NuxtLink>
   </div>
@@ -132,15 +132,6 @@ onMounted(fetchItems)
     }
 
     a {
-      color: white;
-      font-size: 17px;
-      line-height: 138.9%;
-      width: 243px;
-      height: 68px;
-      background: rgb(110, 156, 159);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       margin-left: 100px;
     }
   }
@@ -193,17 +184,7 @@ onMounted(fetchItems)
   }
 
   &-link {
-    border: 1px solid rgb(110, 156, 159);
-    width: 243px;
-    height: 68px;
     margin: 0 auto;
-    color: rgb(110, 156, 159);
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 138.9%;
-    justify-content: center;
-    display: flex;
-    align-items: center;
   }
 }
 

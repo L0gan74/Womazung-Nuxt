@@ -1,0 +1,33 @@
+.btn{
+  color: white;
+  font-size: 17px;
+  line-height: 138.9%;
+  width: 243px;
+  height: 68px;
+  background: rgb(110, 156, 159);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  &:hover{
+    background: rgb(80, 148, 152);
+  }
+}
+
+.transparent{
+  border: 1px solid rgb(110, 156, 159);
+  width: 243px;
+  height: 68px;
+  color: rgb(110, 156, 159);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 138.9%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  &:hover{
+    background: rgb(110, 156, 159);
+    color: white;
+  }
+}

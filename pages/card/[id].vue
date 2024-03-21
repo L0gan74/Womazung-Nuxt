@@ -64,7 +64,7 @@ const {addToCart} = inject("location")
           <button v-for="color in item?.colors" :key="item" :style="{'background': color}" type="button">
           </button>
         </div>
-        <button class="card-text__button" type="button" @click="() => addToCart(item)">
+        <button class="card-text__button btn" type="button" @click="() => addToCart(item)">
           Добавить в корзину
         </button>
       </div>
@@ -151,14 +151,6 @@ h1 {
           border: 2px solid black;
         }
       }
-    }
-
-    &__button {
-      background: rgb(110, 156, 159);
-      width: 268px;
-      height: 68px;
-      font-size: 17px;
-      color: white;
     }
   }
 }

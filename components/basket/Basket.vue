@@ -4,9 +4,12 @@ import {inject} from 'vue'
 
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 
+const router = useRouter()
 const {cartBasket, removeFromCart, totalPrice} = inject("location")
 
-console.log(cartBasket)
+const linkToPayment = () => {
+  router.push('/payment')
+}
 
 </script>
 
@@ -31,20 +34,16 @@ console.log(cartBasket)
       </div>
       <p>${{ item.price }}</p>
     </div>
-    <div class="basket-refresh">
-      <form class="basket-refresh__form">
-        <input type="text" placeholder="Введите купон">
-        <button type="button">Применить купон</button>
-      </form>
-    </div>
+    <form class="basket-refresh">
+      <input type="text" placeholder="Введите купон">
+      <button type="button">Применить купон</button>
+    </form>
     <div class="basket-price">
-      <div class="basket-price__bottom">
-        <div class="basket-price__bottom-total">
-          <p>Итого:</p>
-          <p>${{ totalPrice }}</p>
-        </div>
-        <NuxtLink to="/payment" :disabled="cartBasket == 0">Оформить заказ</NuxtLink>
+      <div class="basket-price__total">
+        <p>Итого:</p>
+        <p>${{ totalPrice }}</p>
       </div>
+      <button type="button" :disabled="cartBasket == 0" @click="linkToPayment">Оформить заказ</button>
     </div>
   </div>
 </template>
@@ -94,67 +93,62 @@ console.log(cartBasket)
 
   &-refresh {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 89px;
+    gap: 16px;
 
-    &__form {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    input {
+      color: rgb(134, 134, 134);
+      font-size: 17px;
+      border: 0;
+      height: 68px;
+      border-bottom: 1px solid black;
+      outline: none;
+    }
 
-      input {
-        color: rgb(134, 134, 134);
-        font-size: 17px;
-        border: 0;
-        height: 68px;
-        border-bottom: 1px solid black;
-        outline: none;
-      }
-
-      button {
-        border: 1px solid rgb(110, 156, 159);
-        width: 248px;
-        height: 68px;
-        color: rgb(110, 156, 159);
-        font-size: 17px;
-      }
+    button {
+      border: 1px solid rgb(110, 156, 159);
+      width: 248px;
+      height: 68px;
+      color: rgb(110, 156, 159);
+      font-size: 17px;
     }
   }
 
   &-price {
     width: 538px;
     margin-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 
-    &__bottom {
+    &__total {
+      background: rgb(241, 234, 220);
       display: flex;
       align-items: center;
-      gap: 15px;
+      justify-content: space-between;
+      padding: 0 25px;
+      width: 287px;
+      height: 68px;
 
-      &-total {
-        background: rgb(241, 234, 220);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 25px;
-        width: 287px;
-        height: 68px;
-
-        p {
-          font-size: 25px;
-          font-weight: 500;
-        }
+      p {
+        font-size: 25px;
+        font-weight: 500;
       }
+    }
 
-      a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: rgb(110, 156, 159);
-        width: 236px;
-        height: 68px;
-        color: white;
-        font-size: 17px;
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgb(110, 156, 159);
+      width: 236px;
+      height: 68px;
+      color: white;
+      font-size: 17px;
+      &:disabled{
+        background: gray;
+        cursor: auto;
       }
     }
   }

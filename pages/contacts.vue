@@ -1,6 +1,26 @@
 <script setup lang="ts">
 
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
+
+import {ErrorMessage, Field, Form} from "vee-validate";
+import * as yup from "yup";
+import {inject} from "vue";
+
+const schema = yup.object({
+  name: yup.string().required("Введите Имя").min(3),
+  email: yup.string().required("Введите Почту").email(),
+  password: yup.string().required("Введите Телефон").min(10),
+  country: yup.string().required("Введите Страну").min(3),
+  city: yup.string().required("Введите Город").min(3),
+  street: yup.string().required("Введите Улицу").min(3),
+  house: yup.string().required("Введите Дом").min(3),
+  apartment: yup.string().required("Введите Квартиру").min(3),
+});
+
+function onSubmit() {
+  console.log("отправлена")
+}
+
 </script>
 
 <template>
@@ -31,7 +51,7 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
         <input type="email" placeholder="E-mail">
         <input type="tel" placeholder="Телефон">
         <textarea placeholder="Сообщение"/>
-        <button type="submit">
+        <button class="btn" type="submit">
           Отправить
         </button>
       </form>
@@ -86,7 +106,8 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
         width: 350px;
         outline: none;
       }
-      textarea{
+
+      textarea {
         color: rgb(134, 134, 134);
         font-size: 17px;
         font-weight: 500;
@@ -100,15 +121,6 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
         height: 134px;
         resize: none;
         outline: none;
-      }
-      button{
-        background: rgb(110, 156, 159);
-        width: 189px;
-        height: 68px;
-        color: rgb(255, 255, 255);
-        font-size: 17px;
-        font-weight: 400;
-        line-height: 138.9%;
       }
     }
   }
