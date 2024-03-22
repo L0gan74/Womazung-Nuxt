@@ -6,6 +6,8 @@
   <div class="wrapper">
     <NuxtLink class="btn" to="">Ссылка</NuxtLink>
     <NuxtLink class="transparent" to="">Ссылка</NuxtLink>
+    <input class="input" placeholder="Текст"/>
+    <textarea class="textarea"></textarea>
   </div>
 </template>
 

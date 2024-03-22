@@ -5,6 +5,8 @@ import {ErrorMessage, Field, Form} from "vee-validate";
 import * as yup from "yup";
 import {inject} from "vue";
 
+const router = useRouter()
+
 const schema = yup.object({
   name: yup.string().required("Введите Имя").min(3),
   email: yup.string().required("Введите Почту").email(),
@@ -17,7 +19,8 @@ const schema = yup.object({
 });
 
 function onSubmit() {
-  console.log("отправлена")
+  router.push('/success')
+  console.log(123)
 }
 
 const {cartBasket, totalPrice} = inject("location")
@@ -27,44 +30,44 @@ const {cartBasket, totalPrice} = inject("location")
 <template>
   <div class="payment">
     <Breadcrumb title="Оформление заказа" category="Оформление заказа"/>
-    <Form @submit="onSubmit" class="payment-wrapper" :validation-schema="schema">
+    <Form @submit="onSubmit" class="payment-wrapper">
       <div class="payment-wrapper__data">
         <h3>Данные покупателя</h3>
         <div class="payment-wrapper__data-input">
-          <Field type="text" name="name" placeholder="Введите Имя"/>
+          <Field class="input" type="text" name="name" placeholder="Введите Имя"/>
           <ErrorMessage name="name"/>
         </div>
         <div class="payment-wrapper__data-input">
-          <Field type="email" name="email" placeholder="Введите Почту"/>
+          <Field class="input" type="email" name="email" placeholder="Введите Почту"/>
           <ErrorMessage name="email"/>
         </div>
         <div class="payment-wrapper__data-input">
-          <Field type="tel" name="tel" placeholder="Введите Телефон"/>
+          <Field class="input" type="tel" name="tel" placeholder="Введите Телефон"/>
           <ErrorMessage name="tel"/>
         </div>
         <h3>Адрес получателя</h3>
         <div class="payment-wrapper__data-input">
-          <Field type="text" name="country" placeholder="Введите Страну"/>
+          <Field class="input" type="text" name="country" placeholder="Введите Страну"/>
           <ErrorMessage name="country"/>
         </div>
         <div class="payment-wrapper__data-input">
-          <Field type="text" name="city" placeholder="Введите Город"/>
+          <Field class="input" type="text" name="city" placeholder="Введите Город"/>
           <ErrorMessage name="city"/>
         </div>
         <div class="payment-wrapper__data-input">
-          <Field type="text" name="street" placeholder="Введите Улицу"/>
+          <Field class="input" type="text" name="street" placeholder="Введите Улицу"/>
           <ErrorMessage name="street"/>
         </div>
         <div class="payment-wrapper__data-input">
-          <Field type="text" name="house" placeholder="Введите Дом"/>
+          <Field class="input" type="text" name="house" placeholder="Введите Дом"/>
           <ErrorMessage name="house"/>
         </div>
         <div class="payment-wrapper__data-input">
-          <Field type="text" name="apartment" placeholder="Введите Квартиру"/>
+          <Field class="input" type="text" name="apartment" placeholder="Введите Квартиру"/>
           <ErrorMessage name="apartment"/>
         </div>
         <h3>Адрес получателя</h3>
-        <textarea placeholder="Введите Комментарий*"></textarea>
+        <textarea class="textarea" placeholder="Введите Комментарий*"></textarea>
       </div>
       <div class="payment-wrapper__order">
         <h3>Ваш заказ</h3>
@@ -81,7 +84,12 @@ const {cartBasket, totalPrice} = inject("location")
           <h4>${{ totalPrice }}</h4>
         </div>
         <h3>Способ оплаты</h3>
-        <button type="submit">Разместить заказ</button>
+        <label class="payment-wrapper__order-label">
+          <input class="payment-wrapper__order-checkbox" type="checkbox">
+          <span class="payment-wrapper__order-custom"></span>
+          Оплата наличными
+        </label>
+        <button class="btn" type="submit">Разместить заказ</button>
       </div>
     </Form>
   </div>
@@ -103,32 +111,6 @@ const {cartBasket, totalPrice} = inject("location")
 
       &-input {
         margin-bottom: 35px;
-
-        input {
-          color: rgb(134, 134, 134);
-          font-size: 17px;
-          font-weight: 500;
-          line-height: 140%;
-          padding-bottom: 15px;
-          border: 0;
-          border-bottom: 1px solid black;
-          width: 350px;
-          outline: none;
-          display: block;
-        }
-      }
-
-      textarea {
-        color: rgb(134, 134, 134);
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 140%;
-        border: 0;
-        border-bottom: 1px solid black;
-        width: 350px;
-        resize: none;
-        outline: none;
-        min-height: 134px;
       }
 
       span {
@@ -164,13 +146,45 @@ const {cartBasket, totalPrice} = inject("location")
         }
       }
 
-      button {
-        background: rgb(110, 156, 159);
-        width: 260px;
-        height: 68px;
-        color: white;
-        font-size: 17px;
-        line-height: 138.9%;
+      &-label {
+        cursor: pointer;
+        margin-bottom: 48px;
+        display: block;
+      }
+
+      &-checkbox {
+        position: absolute;
+        width: 0;
+        height: 0;
+        opacity: 0;
+        z-index: -1;
+
+        &:checked + .payment-wrapper__order-custom::before {
+          transform: translate(50%, 50%) scale(1);
+        }
+      }
+
+      &-custom {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        background: white;
+        box-sizing: border-box;
+        border: 1px solid black;
+        margin-right: 14px;
+        vertical-align: sub;
+        position: relative;
+
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          background: black;
+          position: absolute;
+          transform: translate(50%, 50%) scale(0);
+          transition: 0.2 ease-in;
+        }
       }
     }
   }

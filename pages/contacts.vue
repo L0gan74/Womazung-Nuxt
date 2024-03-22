@@ -4,17 +4,11 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 
 import {ErrorMessage, Field, Form} from "vee-validate";
 import * as yup from "yup";
-import {inject} from "vue";
 
 const schema = yup.object({
   name: yup.string().required("Введите Имя").min(3),
   email: yup.string().required("Введите Почту").email(),
-  password: yup.string().required("Введите Телефон").min(10),
-  country: yup.string().required("Введите Страну").min(3),
-  city: yup.string().required("Введите Город").min(3),
-  street: yup.string().required("Введите Улицу").min(3),
-  house: yup.string().required("Введите Дом").min(3),
-  apartment: yup.string().required("Введите Квартиру").min(3),
+  tel: yup.string().required("Введите Телефон").min(10),
 });
 
 function onSubmit() {
@@ -46,15 +40,18 @@ function onSubmit() {
     </div>
     <div class="contacts-form">
       <h3>Напишите нам</h3>
-      <form>
-        <input type="text" placeholder="Имя">
-        <input type="email" placeholder="E-mail">
-        <input type="tel" placeholder="Телефон">
-        <textarea placeholder="Сообщение"/>
+      <Form @submit="onSubmit" :validation-schema="schema">
+        <Field class="input" type="text" name="name" placeholder="Имя"/>
+        <ErrorMessage name="name"/>
+        <Field class="input" type="email" name="email" placeholder="E-mail"/>
+        <ErrorMessage name="email"/>
+        <Field class="input" type="tel" name="tel" placeholder="Телефон"/>
+        <ErrorMessage name="tel"/>
+        <textarea class="textarea" placeholder="Сообщение*"></textarea>
         <button class="btn" type="submit">
           Отправить
         </button>
-      </form>
+      </Form>
     </div>
   </div>
 </template>
@@ -94,33 +91,12 @@ function onSubmit() {
 
     form {
       input {
-        color: rgb(134, 134, 134);
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 140%;
-        border: 0;
-        border-bottom: 1px solid black;
-        display: block;
         margin-bottom: 35.5px;
-        padding-bottom: 10px;
-        width: 350px;
-        outline: none;
       }
 
       textarea {
-        color: rgb(134, 134, 134);
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 140%;
-        border: 0;
-        border-bottom: 1px solid black;
-        display: block;
         margin-bottom: 35.5px;
         padding-bottom: 10px;
-        width: 443px;
-        height: 134px;
-        resize: none;
-        outline: none;
       }
     }
   }

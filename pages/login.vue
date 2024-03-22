@@ -48,13 +48,13 @@ onMounted(() => {
   <div class="form">
     <h1>Авторизация</h1>
     <Form @submit="submitForm" :validation-schema="schema">
-      <Field v-model="loginForm.fullName" type="text" name="name" placeholder="Введите Имя"/>
+      <Field class="input" v-model="loginForm.fullName" type="text" name="name" placeholder="Введите Имя"/>
       <ErrorMessage name="name"/>
-      <Field v-model="loginForm.email" type="email" name="email" placeholder="Введите почту"/>
+      <Field class="input" v-model="loginForm.email" type="email" name="email" placeholder="Введите почту"/>
       <ErrorMessage name="email"/>
-      <Field v-model="loginForm.password" type="password" name="password" placeholder="Введите пароль"/>
+      <Field class="input" v-model="loginForm.password" type="password" name="password" placeholder="Введите пароль"/>
       <ErrorMessage name="password"/>
-      <button type="submit">
+      <button class="btn" type="submit">
         Авторизация
       </button>
       <NuxtLink to="/register">Зарегистрироваться</NuxtLink>
@@ -80,30 +80,11 @@ onMounted(() => {
   }
 
   input {
-    width: 100%;
-    height: 40px;
-    padding-left: 15px;
     margin-bottom: 15px;
-    color: black;
-    font-size: 16px;
-    outline: none;
-    border-radius: 8px;
-
-    &::placeholder {
-      color: black;
-    }
   }
 
   button {
-    width: 200px;
     margin: 0 auto;
-    height: 48px;
-    border-radius: 4px;
-    background: #0fae96;
-    color: #ecf1f0;
-    font-size: 17px;
-    border: 0;
-    display: block;
   }
 
   a {

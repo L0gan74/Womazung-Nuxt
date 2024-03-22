@@ -43,6 +43,8 @@ function logout() {
 }
 
 const thereToken = localStorage.getItem('token')
+const {cartBasket} = inject("location")
+const cartLenght = cartBasket.value.length
 
 </script>
 
@@ -82,6 +84,7 @@ const thereToken = localStorage.getItem('token')
         +7 (495) 823-54-12
       </button>
       <NuxtLink class="basket" to="/basket">
+        <span v-if="cartLenght > 0">{{ cartLenght }}</span>
         <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <clipPath id="clip4_500">
@@ -176,6 +179,26 @@ const thereToken = localStorage.getItem('token')
       display: flex;
       align-items: center;
       gap: 15px;
+    }
+
+    a {
+      position: relative;
+
+      span {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        border-radius: 50px;
+        background: rgb(153, 142, 120);
+        width: 15px;
+        height: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 9px;
+        font-weight: 400;
+      }
     }
   }
 }

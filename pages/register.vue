@@ -44,13 +44,13 @@ onMounted(() => {
   <div class="form">
     <h1>Регистрация</h1>
     <Form @submit="submitForm">
-      <Field v-model="registerForm.fullName" type="text" name="name" placeholder="Введите Имя"/>
+      <Field class="input" v-model="registerForm.fullName" type="text" name="name" placeholder="Введите Имя"/>
       <ErrorMessage name="name"/>
-      <Field v-model="registerForm.email" type="email" name="email" placeholder="Введите почту"/>
+      <Field class="input" v-model="registerForm.email" type="email" name="email" placeholder="Введите почту"/>
       <ErrorMessage name="email"/>
-      <Field v-model="registerForm.password" type="password" name="password" placeholder="Введите пароль"/>
+      <Field class="input" v-model="registerForm.password" type="password" name="password" placeholder="Введите пароль"/>
       <ErrorMessage name="password"/>
-      <button type="submit">
+      <button class="btn" type="submit">
         Зарегистрироваться
       </button>
       <NuxtLink to="/login">Авторизация</NuxtLink>

@@ -32,8 +32,8 @@ defineProps<{
     transition: background-color 1s ease-in-out;
     &:hover {
       &:after {
-        background-color: #6e9c9fa1;
         content: "";
+        background-color: #6e9c9fa1;
         position: absolute;
         top: 0;
         left: 0;
