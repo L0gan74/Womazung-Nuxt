@@ -31,12 +31,18 @@ defineProps<{
 <style scoped lang="scss">
 .title {
   padding-bottom: 28px;
+  @media(max-width: 992px){
+    padding-bottom: 15px;
+  }
 }
 
 .breadcrumb {
   display: flex;
   gap: 5px;
   padding-bottom: 60px;
+  @media(max-width: 992px){
+    padding-bottom: 20px;
+  }
 
   &-first a {
     color: black !important;

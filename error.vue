@@ -11,9 +11,9 @@ const handleError = () => clearError({redirect: '/'})
 <template>
   <div class="error">
     <div class="error-wrapper">
-      <h2>К сожалению страница не найдена или она не работает :(</h2>
-      <h3>{{ error.statusCode }}</h3>
-      <NuxtLink to="/">Главная</NuxtLink>
+      <h2 class="error-wrapper__text">К сожалению страница не найдена или она не работает :(</h2>
+      <h3 class="error-wrapper__error">{{ error.statusCode }}</h3>
+      <NuxtLink class="error-wrapper__link" to="/">Главная</NuxtLink>
     </div>
   </div>
 </template>
@@ -26,10 +26,10 @@ const handleError = () => clearError({redirect: '/'})
   align-items: center;
   &-wrapper{
     text-align: center;
-    h3{
+    &__text{
       padding: 40px 0;
     }
-    a{
+    &__link{
       color: rgb(110, 156, 159);
       font-weight: 700;
       font-size: 24px;

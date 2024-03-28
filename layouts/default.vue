@@ -23,8 +23,11 @@ import Footer from "~/layouts/Footer.vue";
 }
 
 .container{
-  width: 1110px;
-  margin: 0 auto;
+  padding: 0 15px;
   flex: 1;
+  @media(min-width: 1220px) {
+    width: 1220px;
+    margin: 0 auto;
+  }
 }
 </style>

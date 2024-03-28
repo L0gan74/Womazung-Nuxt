@@ -1,4 +1,4 @@
-.btn{
+.btn {
   color: white;
   font-size: 17px;
   line-height: 138.9%;
@@ -9,12 +9,17 @@
   justify-content: center;
   align-items: center;
   transition: 0.3s;
-  &:hover{
+
+  &:hover {
     background: rgb(80, 148, 152);
+  }
+
+  @media(max-width: 768px) {
+    height: 48px;
   }
 }
 
-.transparent{
+.transparent {
   border: 1px solid rgb(110, 156, 159);
   width: 243px;
   height: 68px;
@@ -26,13 +31,17 @@
   display: flex;
   align-items: center;
   transition: 0.3s;
-  &:hover{
+
+  &:hover {
     background: rgb(110, 156, 159);
     color: white;
   }
+  @media(max-width: 768px) {
+    height: 48px;
+  }
 }
 
-.input{
+.input {
   color: rgb(134, 134, 134);
   font-size: 17px;
   font-weight: 500;
@@ -43,9 +52,12 @@
   width: 350px;
   outline: none;
   padding-bottom: 10px;
+  @media(max-width: 768px) {
+    width: 100%;
+  }
 }
 
-.textarea{
+.textarea {
   color: rgb(134, 134, 134);
   font-size: 17px;
   font-weight: 500;

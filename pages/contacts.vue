@@ -59,9 +59,15 @@ function onSubmit() {
 <style scoped lang="scss">
 .contacts {
   margin: 100px 0;
+  @media(max-width: 992px) {
+    margin: 40px 0 50px;
+  }
 
   iframe {
     width: 100%;
+    @media(max-width: 992px){
+      height: 350px;
+    }
   }
 
   &-text {
@@ -69,6 +75,10 @@ function onSubmit() {
     gap: 98px;
     padding: 130px 0;
     flex-wrap: wrap;
+    @media(max-width: 992px){
+      gap: 25px;
+      padding: 40px 0;
+    }
 
     p {
       font-weight: 500;

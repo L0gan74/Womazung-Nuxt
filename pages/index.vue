@@ -7,8 +7,7 @@ import type {ItemsCard} from "~/interface/Items";
 
 const items = ref<ItemsCard[]>([])
 const loading = ref<boolean>(false)
-const itemsStore = useItemsStore()
-
+const apiUrl = process.env.apiBase
 const fetchItems = async () => {
   try {
     loading.value = true
@@ -26,7 +25,7 @@ onMounted(fetchItems)
 </script>
 
 <template>
-  <div class="receipts">
+  <div class="receipts indentation">
     <Swiper/>
     <div class="receipts-images">
       <NuxtImg src="/img/receipts-main.png" alt="img"/>
@@ -34,8 +33,8 @@ onMounted(fetchItems)
       <NuxtImg src="/img/receipts-1.png" alt="img"/>
     </div>
   </div>
-  <div class="collection">
-    <h2>Новая коллекция</h2>
+  <div class="collection indentation">
+    <h2 class="collection-title _title">Новая коллекция</h2>
     <div class="collection-container">
       <Card :items="items"/>
     </div>
@@ -43,49 +42,49 @@ onMounted(fetchItems)
       Открыть магазин
     </NuxtLink>
   </div>
-  <div class="important">
-    <h2>Что для нас важно</h2>
+  <div class="important indentation">
+    <h2 class="important-title _title">Что для нас важно</h2>
     <div class="important-container">
       <div class="important-container__item">
-        <NuxtImg src="/img/quality.svg" alt="img" width="61" height="61"/>
-        <h3>
+        <NuxtImg class="important-container__item-img" src="/img/quality.svg" alt="img" width="61" height="61"/>
+        <h3 class="important-container__item-title">
           Качество
         </h3>
-        <p>
+        <p class="important-container__item-description">
           Наши профессионалы работают на лучшем оборудовании для пошива одежды беспрецедентного качества
         </p>
       </div>
       <div class="important-container__item">
-        <NuxtImg src="/img/speed.svg" alt="img" width="61" height="61"/>
-        <h3>
+        <NuxtImg class="important-container__item-img" src="/img/speed.svg" alt="img" width="61" height="61"/>
+        <h3 class="important-container__item-title">
           Скорость
         </h3>
-        <p>
+        <p class="important-container__item-description">
           Благодаря отлаженной системе в Womazing мы можем отшивать до 20-ти единиц продукции в наших собственных цехах
         </p>
       </div>
       <div class="important-container__item">
-        <NuxtImg src="/img/responsibility.svg" alt="img" width="61" height="61"/>
-        <h3>
+        <NuxtImg class="important-container__item-img" src="/img/responsibility.svg" alt="img" width="61" height="61"/>
+        <h3 class="important-container__item-title">
           Ответственность
         </h3>
-        <p>
+        <p class="important-container__item-description">
           Мы заботимся о людях и планете. Безотходное производство и комфортные условия труда - все это Womazing
         </p>
       </div>
     </div>
   </div>
-  <div class="team">
-    <h2>Команда мечты Womazing</h2>
+  <div class="team indentation">
+    <h2 class="team-title _title">Команда мечты Womazing</h2>
     <div class="team-container">
       <NuxtImg class="team-container__img" src="/img/team.png" alt="img"/>
       <div class="team-container__text">
-        <h3>Для каждой</h3>
-        <p>Каждая девушка уникальна. Однако, мы схожи в миллионе мелочей.
+        <h3 class="team-container__text-title">Для каждой</h3>
+        <p class="team-container__text-description">Каждая девушка уникальна. Однако, мы схожи в миллионе мелочей.
         </p>
-        <p>Womazing ищет эти мелочи и создает прекрасные вещи, которые выгодно подчеркивают достоинства каждой
+        <p class="team-container__text-description">Womazing ищет эти мелочи и создает прекрасные вещи, которые выгодно подчеркивают достоинства каждой
           девушки.</p>
-        <NuxtLink to="/brand">
+        <NuxtLink class="team-container__text-link" to="/brand">
           Подробнее о бренде
         </NuxtLink>
       </div>
@@ -96,8 +95,10 @@ onMounted(fetchItems)
 <style lang="scss">
 .receipts {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-bottom: 130px;
+  gap: 20px;
+  @media(min-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   &:after {
     content: '';
@@ -108,6 +109,9 @@ onMounted(fetchItems)
     bottom: 0;
     width: calc(50% - 60px);
     height: 815px;
+    @media (max-width: 992px){
+      display: none;
+    }
   }
 
   &-swiper {
@@ -116,22 +120,35 @@ onMounted(fetchItems)
 
   &-text {
     padding-top: 140px;
+    @media (max-width: 992px) {
+      text-align: center;
+      padding-top: 40px;
+    }
 
     h1 {
       padding-bottom: 45px;
+      @media (max-width: 992px){
+        padding-bottom: 25px;
+      }
     }
 
-    p {
+    &__description {
       color: black;
       font-size: 20px;
       line-height: 140%;
-      text-align: right;
-      padding-bottom: 52px;
-      max-width: 385px;
+      padding-bottom: 25px;
+      @media (min-width: 992px) {
+        max-width: 385px;
+        text-align: right;
+        padding-bottom: 52px;
+      }
     }
 
-    a {
+    &__link {
       margin-left: 100px;
+      @media (max-width: 992px){
+        margin: 0 auto 15px;
+      }
     }
   }
 
@@ -139,6 +156,9 @@ onMounted(fetchItems)
     position: relative;
     padding-bottom: 50px;
     z-index: 2;
+    @media(max-width: 992px) {
+      display: none;
+    }
 
     img {
       display: block;
@@ -147,6 +167,12 @@ onMounted(fetchItems)
       &:nth-child(1) {
         height: 646px;
         margin-left: auto;
+        @media(max-width: 1400px) {
+          width: 100%;
+          height: 100%;
+          display: block;
+          object-fit: cover;
+        }
       }
 
       &:nth-child(2) {
@@ -155,6 +181,9 @@ onMounted(fetchItems)
         position: absolute;
         top: 100px;
         right: -98px;
+        @media(max-width: 1400px) {
+          display: none;
+        }
       }
 
       &:nth-child(3) {
@@ -163,23 +192,25 @@ onMounted(fetchItems)
         position: absolute;
         bottom: 0;
         left: 60px;
+        @media(max-width: 1400px) {
+          display: none;
+        }
       }
     }
   }
 }
 
 .collection {
-  margin-bottom: 130px;
-
-  h2 {
-    padding-bottom: 92px;
-  }
 
   &-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     margin-bottom: 65px;
+    @media(max-width: 992px){
+     margin-bottom: 30px;
+      gap: 15px;
+    }
   }
 
   &-link {
@@ -188,23 +219,28 @@ onMounted(fetchItems)
 }
 
 .important {
-  margin-bottom: 130px;
-
-  h2 {
-    padding-bottom: 92px;
-  }
 
   &-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 75px;
+    grid-gap: 20px;
+    @media(min-width: 992px){
+      grid-template-columns: repeat(3, 1fr);
+    }
 
     &__item {
-      h3 {
+      @media(max-width: 992px){
+        width: 360px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      &-title {
         padding: 37px 0 24px;
+        @media(max-width: 992px){
+          padding: 20px 0 10px;
+        }
       }
 
-      p {
+      &-description {
         color: black;
         font-size: 17px;
         font-weight: 500;
@@ -215,35 +251,41 @@ onMounted(fetchItems)
 }
 
 .team {
-  margin-bottom: 130px;
-
-  h2 {
-    padding-bottom: 92px;
-  }
 
   &-container {
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 60% 30%;
     grid-gap: 124px;
     align-items: center;
+    @media(max-width: 992px){
+      grid-template-columns: 1fr;
+      gap: 35px;
+    }
 
     &__img {
       display: block;
       width: 100%;
+      height: 100%;
       object-fit: cover;
     }
 
     &__text {
-      h3 {
+      &-title {
         padding-bottom: 28px;
+        @media(max-width: 992px){
+          padding-bottom: 15px;
+        }
       }
 
-      p {
+      &-description {
         color: black;
         font-size: 17px;
         font-weight: 500;
         line-height: 140%;
         padding-bottom: 28px;
+        @media(max-width: 992px){
+          padding-bottom: 15px;
+        }
       }
 
       a {

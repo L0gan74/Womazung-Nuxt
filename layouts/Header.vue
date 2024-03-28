@@ -53,26 +53,26 @@ const cartLenght = cartBasket.value.length
     <NuxtLink to="/">
       <NuxtImg src="/img/logo.svg" width="139"/>
     </NuxtLink>
-    <nav class="nav">
-      <NuxtLink exact-active-class="_active" to="/">
+    <nav class="header-nav">
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/">
         Главная
       </NuxtLink>
-      <NuxtLink exact-active-class="_active" to="/shop">
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/shop">
         Магазин
       </NuxtLink>
-      <NuxtLink exact-active-class="_active" to="/brand">
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/brand">
         О бренде
       </NuxtLink>
-      <NuxtLink exact-active-class="_active" to="/contacts">
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/contacts">
         Контакты
       </NuxtLink>
-      <NuxtLink exact-active-class="_active" to="/login">
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/login">
         Авторизация
       </NuxtLink>
-      <button v-if="thereToken" @click="logout" type="submit">Выйти</button>
+      <button class="header-nav__logout" v-if="thereToken" @click="logout" type="submit">Выйти</button>
     </nav>
-    <div class="nav-right">
-      <button type="button" @click="openModal">
+    <div class="header-right">
+      <button class="header-right__phone" type="button" @click="openModal">
         <svg width="14.447693" height="14.451538" viewBox="0 0 14.4477 14.4515" fill="none"
              xmlns="http://www.w3.org/2000/svg"
         >
@@ -83,8 +83,9 @@ const cartLenght = cartBasket.value.length
         </svg>
         +7 (495) 823-54-12
       </button>
-      <NuxtLink class="basket" to="/basket">
-        <span v-if="cartLenght > 0">{{ cartLenght }}</span>
+      <NuxtLink class="header-right__basket" to="/basket">
+        <span class="header-right__basket-quantity"
+              v-if="cartLenght > 0">{{ cartLenght }}</span>
         <svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <clipPath id="clip4_500">
@@ -106,6 +107,9 @@ const cartLenght = cartBasket.value.length
         </svg>
 
       </NuxtLink>
+      <button class="header-right__burger" type="button">
+        <NuxtImg src="/img/burger.svg" alt="svg"/>
+      </button>
     </div>
   </header>
   <div class="modal" v-if="modal">
@@ -115,13 +119,13 @@ const cartLenght = cartBasket.value.length
           <NuxtImg src="/img/close.svg" alt="close"/>
         </button>
         <h3>Заказать обратный звонок</h3>
-        <Field type="text" name="name" placeholder="Имя"/>
+        <Field class="modal-wrapper__form-input input" type="text" name="name" placeholder="Имя"/>
         <ErrorMessage name="name"/>
-        <Field type="email" name="email" placeholder="E-mail"/>
+        <Field class="modal-wrapper__form-input input" type="email" name="email" placeholder="E-mail"/>
         <ErrorMessage name="email"/>
-        <Field type="tel" name="phone" placeholder="Телефон"/>
+        <Field class="modal-wrapper__form-input input" type="tel" name="phone" placeholder="Телефон"/>
         <ErrorMessage name="phone"/>
-        <button class="modal-wrapper__form-submit" type="submit">
+        <button class="modal-wrapper__form-submit btn" type="submit">
           Заказать звонок
         </button>
       </Form>
@@ -130,43 +134,49 @@ const cartLenght = cartBasket.value.length
   <div class="modal" v-if="backModal">
     <div class="modal-wrapper _back">
       <h3>Отлично! Мы скоро вам перезвоним.</h3>
-      <button @click="closeBackModal" type="button">Закрыть</button>
+      <button class="modal-wrapper__home transparent" @click="closeBackModal" type="button">Закрыть</button>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .header {
-  width: 1110px;
+  width: 1220px;
   margin: 0 auto;
-  padding: 50px 0 44px;
+  padding: 50px 15px 44px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
   z-index: 2;
-
-  a {
-    color: black;
-    font-size: 15px;
-    line-height: 140%;
+  @media(max-width: 1220px) {
+    width: 100%;
   }
-}
+  @media(max-width: 992px) {
+    padding: 20px 15px 15px;
+  }
 
-.nav {
-  display: flex;
-  gap: 45px;
-
-  a {
-    transition: .2s linear;
-
-    &:hover {
-      color: rgb(110 156 159 / 58%);
+  &-nav {
+    display: flex;
+    gap: 45px;
+    @media(max-width: 992px) {
+      display: none;
     }
 
-    &._active {
-      color: rgb(110, 156, 159);
-      font-weight: 700;
+    &__link {
+      color: black;
+      font-size: 15px;
+      line-height: 140%;
+      transition: .2s linear;
+
+      &:hover {
+        color: rgb(110 156 159 / 58%);
+      }
+
+      &._active {
+        color: rgb(110, 156, 159);
+        font-weight: 700;
+      }
     }
   }
 
@@ -174,34 +184,52 @@ const cartLenght = cartBasket.value.length
     display: flex;
     align-items: center;
     gap: 67px;
+    @media(max-width: 992px) {
+      gap: 20px;
+    }
 
-    button {
+    &__phone {
       display: flex;
       align-items: center;
       gap: 15px;
+      @media(max-width: 992px) {
+        display: none;
+      }
     }
 
-    a {
+    &__basket {
       position: relative;
+    }
 
-      span {
-        position: absolute;
-        right: -10px;
-        top: -10px;
-        border-radius: 50px;
-        background: rgb(153, 142, 120);
-        width: 15px;
-        height: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 9px;
-        font-weight: 400;
+    &__quantity {
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      border-radius: 50px;
+      background: rgb(153, 142, 120);
+      width: 15px;
+      height: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 9px;
+      font-weight: 400;
+    }
+
+    &__burger {
+      @media(min-width: 992px) {
+        display: none;
+      }
+
+      img {
+        width: 24px;
+        height: 24px;
       }
     }
   }
 }
+
 
 .modal {
   background: rgba(110, 156, 159, 0.631372549);
@@ -218,20 +246,17 @@ const cartLenght = cartBasket.value.length
     padding: 70px;
     background: white;
     position: relative;
+    @media(max-width: 768px) {
+      width: 340px;
+      padding: 20px;
+    }
 
     &._back {
       width: auto;
+    }
 
-      button {
-        border: 1px solid rgb(110, 156, 159);
-        width: 168px;
-        height: 68px;
-        color: rgb(110, 156, 159);
-        font-size: 17px;
-        font-weight: 400;
-        line-height: 138.9%;
-        margin: 35px auto 0;
-      }
+    &__home {
+      margin: 35px auto 0;
     }
 
     &__form {
@@ -241,23 +266,34 @@ const cartLenght = cartBasket.value.length
         position: absolute;
         right: 32px;
         top: 32px;
+        @media(max-width: 768px) {
+          right: 15px;
+          top: 15px;
+        }
+
+        img {
+          width: 15px;
+          height: 15px;
+          @media(max-width: 768px) {
+            width: 10px;
+            height: 10px;
+          }
+
+        }
       }
 
       h3 {
         padding-bottom: 35px;
+        @media(max-width: 768px){
+          padding-bottom: 20px;
+        }
       }
 
-      input {
-        color: rgb(134, 134, 134);
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 140%;
+      &-input {
         margin-bottom: 35px;
-        padding-bottom: 15px;
-        border: 0;
-        border-bottom: 1px solid black;
-        width: 100%;
-        outline: none;
+        @media(max-width: 768px){
+          margin-bottom: 20px;
+        }
       }
 
       span {
@@ -266,13 +302,7 @@ const cartLenght = cartBasket.value.length
       }
 
       &-submit {
-        background: rgb(110, 156, 159);
         width: 100%;
-        height: 68px;
-        color: white;
-        font-size: 17px;
-        font-weight: 400;
-        line-height: 138.9%;
       }
     }
   }

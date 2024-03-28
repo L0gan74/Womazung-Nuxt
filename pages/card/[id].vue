@@ -83,12 +83,21 @@ h1 {
   align-items: center;
   gap: 74px;
   margin-bottom: 130px;
+  @media(max-width: 992px){
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+  }
 
   &-img {
     width: 536px;
     height: 729px;
     object-fit: cover;
     display: block;
+    @media(max-width: 992px){
+      width: 100%;
+      height: 350px;
+    }
   }
 
   &-text {
@@ -105,6 +114,9 @@ h1 {
       display: flex;
       gap: 29px;
       padding-bottom: 64px;
+      @media(max-width: 992px){
+        padding-bottom: 30px;
+      }
 
       p {
         font-size: 40px;

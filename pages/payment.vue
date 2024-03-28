@@ -30,7 +30,7 @@ const {cartBasket, totalPrice} = inject("location")
 <template>
   <div class="payment">
     <Breadcrumb title="Оформление заказа" category="Оформление заказа"/>
-    <Form @submit="onSubmit" class="payment-wrapper">
+    <Form @submit="onSubmit" :validation-schema="schema" class="payment-wrapper">
       <div class="payment-wrapper__data">
         <h3>Данные покупателя</h3>
         <div class="payment-wrapper__data-input">
@@ -99,10 +99,20 @@ const {cartBasket, totalPrice} = inject("location")
 
 .payment {
   margin: 100px 0;
+  @media(max-width: 992px){
+    margin: 40px 0 30px;
+  }
 
   &-wrapper {
     display: flex;
     gap: 200px;
+    @media(max-width: 1200px){
+      gap: 50px;
+    }
+    @media(max-width: 992px){
+      flex-direction: column;
+      gap: 25px;
+    }
 
     &__data {
       h3 {

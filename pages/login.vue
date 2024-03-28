@@ -48,13 +48,14 @@ onMounted(() => {
   <div class="form">
     <h1>Авторизация</h1>
     <Form @submit="submitForm" :validation-schema="schema">
-      <Field class="input" v-model="loginForm.fullName" type="text" name="name" placeholder="Введите Имя"/>
-      <ErrorMessage name="name"/>
-      <Field class="input" v-model="loginForm.email" type="email" name="email" placeholder="Введите почту"/>
-      <ErrorMessage name="email"/>
-      <Field class="input" v-model="loginForm.password" type="password" name="password" placeholder="Введите пароль"/>
-      <ErrorMessage name="password"/>
-      <button class="btn" type="submit">
+      <Field class="form-input input" v-model="loginForm.fullName" type="text" name="name" placeholder="Введите Имя"/>
+      <ErrorMessage class="form-error" name="name"/>
+      <Field class="form-input input" v-model="loginForm.email" type="email" name="email" placeholder="Введите почту"/>
+      <ErrorMessage class="form-error" name="email"/>
+      <Field class="form-input input" v-model="loginForm.password" type="password" name="password"
+             placeholder="Введите пароль"/>
+      <ErrorMessage class="form-error" name="password"/>
+      <button class="form-button btn" type="submit">
         Авторизация
       </button>
       <NuxtLink to="/register">Зарегистрироваться</NuxtLink>
@@ -64,7 +65,7 @@ onMounted(() => {
 
 <style lang="scss">
 .form {
-  width: 600px;
+  width: fit-content;
   height: auto;
   margin: auto;
   border-radius: 8px;
@@ -79,12 +80,19 @@ onMounted(() => {
     padding-bottom: 15px;
   }
 
-  input {
+  &-input {
     margin-bottom: 15px;
   }
 
-  button {
+  &-button {
     margin: 0 auto;
+  }
+
+  &-error {
+    color: red;
+    text-align: center;
+    display: block;
+    padding-bottom: 10px;
   }
 
   a {

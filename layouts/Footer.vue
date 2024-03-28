@@ -25,12 +25,19 @@
 .footer {
   background: rgb(241, 234, 220);
   padding: 104px 0 97px;
+  @media(max-width: 992px) {
+    padding: 30px 0 25px;
+  }
 
   &-container {
     display: flex;
     justify-content: space-between;
     width: 400px;
     margin: 0 auto;
+    @media(max-width: 992px) {
+      width: 100%;
+      padding: 0 15px;
+    }
     a {
       transition: .2s linear;
       color: black;

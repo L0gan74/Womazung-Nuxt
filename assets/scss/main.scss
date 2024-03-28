@@ -14,7 +14,7 @@ body {
   font-weight: 400;
   line-height: normal;
 
-  &._hidden{
+  &._hidden {
     overflow: hidden;
   }
 }
@@ -24,6 +24,12 @@ h1 {
   font-size: 55px;
   font-weight: 500;
   line-height: 110%;
+  @media(max-width: 1220px) {
+    font-size: 40px;
+  }
+  @media(max-width: 768px) {
+    font-size: 30px;
+  }
 }
 
 h2 {
@@ -31,6 +37,18 @@ h2 {
   font-size: 40px;
   font-weight: 500;
   line-height: 110%;
+  @media(max-width: 1220px) {
+    font-size: 35px;
+  }
+  @media(max-width: 768px) {
+    font-size: 25px;
+  }
+  &._title{
+    padding-bottom: 92px;
+    @media(max-width: 992px){
+      padding-bottom: 30px;
+    }
+  }
 }
 
 h3 {
@@ -38,6 +56,9 @@ h3 {
   font-size: 25px;
   font-weight: 500;
   line-height: 140%;
+  @media(max-width: 1220px) {
+    font-size: 20px;
+  }
 }
 
 .no-scroll {
@@ -66,17 +87,16 @@ button {
 
 .swiper-pagination {
   bottom: 56px !important;
+  @media (max-width: 992px) {
+    position: relative !important;
+    bottom: 0 !important;
+  }
 
   &-bullet {
     width: 30px !important;
     height: 4px !important;
     opacity: 1 !important;
     border-radius: 0 !important;
-  }
-}
-
-.receipts {
-  .swiper-pagination-bullet {
     background: rgb(209, 209, 209) !important;
 
     &-active {
@@ -85,10 +105,17 @@ button {
   }
 }
 
-.preolader{
+.preolader {
   width: 100%;
   height: 50vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.indentation{
+  margin-bottom: 130px;
+  @media(max-width: 992px){
+    margin-bottom: 45px;
+  }
 }

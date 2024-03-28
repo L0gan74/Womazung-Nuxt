@@ -35,15 +35,17 @@ const linkToPayment = () => {
       <p>${{ item.price }}</p>
     </div>
     <form class="basket-refresh">
-      <input type="text" placeholder="Введите купон">
-      <button type="button">Применить купон</button>
+      <input class="basket-refresh__input input" type="text" placeholder="Введите купон">
+      <button class="basket-refresh__button transparent" type="button">Применить купон</button>
     </form>
     <div class="basket-price">
       <div class="basket-price__total">
-        <p>Итого:</p>
-        <p>${{ totalPrice }}</p>
+        <p class="basket-price__total-text">Итого:</p>
+        <p class="basket-price__total-text">${{ totalPrice }}</p>
       </div>
-      <button type="button" :disabled="cartBasket == 0" @click="linkToPayment">Оформить заказ</button>
+      <button class="basket-price__button btn" type="button" :disabled="cartBasket == 0" @click="linkToPayment">Оформить
+        заказ
+      </button>
     </div>
   </div>
 </template>
@@ -51,6 +53,9 @@ const linkToPayment = () => {
 <style scoped lang="scss">
 .basket {
   margin: 196px 0 130px;
+  @media(max-width: 992px) {
+    margin: 40px 0 30px;
+  }
 
   p {
     color: black;
@@ -76,11 +81,18 @@ const linkToPayment = () => {
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
     margin: 72px 0;
+    gap: 10px;
+    @media(max-width: 992px) {
+      margin: 20px 0;
+    }
 
     &__items {
       display: flex;
       align-items: center;
       gap: 34px;
+      @media(max-width: 992px) {
+        gap: 10px;
+      }
 
       img {
         width: 137px;
@@ -94,32 +106,24 @@ const linkToPayment = () => {
   &-refresh {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 89px;
     gap: 16px;
-
-    input {
-      color: rgb(134, 134, 134);
-      font-size: 17px;
-      border: 0;
-      height: 68px;
-      border-bottom: 1px solid black;
-      outline: none;
+    @media(max-width: 992px) {
+      margin-bottom: 25px;
     }
 
-    button {
-      border: 1px solid rgb(110, 156, 159);
-      width: 248px;
-      height: 68px;
-      color: rgb(110, 156, 159);
-      font-size: 17px;
+    &__button{
+      @media(max-width: 480px) {
+        width: 100%;
+      }
     }
   }
 
   &-price {
-    width: 538px;
-    margin-left: 0;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 15px;
 
     &__total {
@@ -130,23 +134,28 @@ const linkToPayment = () => {
       padding: 0 25px;
       width: 287px;
       height: 68px;
+      @media(max-width: 992px) {
+        width: 243px;
+        height: 48px;
+      }
+      @media(max-width: 480px) {
+        width: 100%;
+      }
 
-      p {
+      &-text {
         font-size: 25px;
         font-weight: 500;
+        @media(max-width: 992px) {
+          font-size: 20px;
+        }
       }
     }
 
-    button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgb(110, 156, 159);
-      width: 236px;
-      height: 68px;
-      color: white;
-      font-size: 17px;
-      &:disabled{
+    &__button {
+      @media(max-width: 480px) {
+        width: 100%;
+      }
+      &:disabled {
         background: gray;
         cursor: auto;
       }

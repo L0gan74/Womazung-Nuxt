@@ -3,8 +3,8 @@
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 import axios from "axios";
 import {onMounted} from "vue";
-import type {Category, ItemIdCard, ItemsCard} from "~/interface/Items";
-import { provide, ref } from 'vue'
+import type {Category, ItemsCard} from "~/interface/Items";
+import { ref } from 'vue'
 
 const items = ref<ItemsCard[]>([])
 const loading = ref<boolean>(false)
@@ -50,7 +50,7 @@ onMounted(fetchItems)
   <div class="shop">
     <Breadcrumb title="Магазин" category="Магазин" category-link="shop"/>
     <div class="shop-categories">
-      <button v-for="category in categories"
+      <button class="shop-categories__button" v-for="category in categories"
               :class="{'_active' : category.isActive}"
               type="button"
               :key="category.id"
@@ -75,20 +75,27 @@ onMounted(fetchItems)
 <style scoped lang="scss">
 .shop {
   margin: 100px 0 130px;
+  @media(max-width: 992px){
+    margin: 40px 0 50px;
+  }
 
   &-categories {
     padding-bottom: 40px;
     display: flex;
     gap: 10px;
-
-    button {
+    overflow-x: auto;
+    white-space: nowrap;
+    @media(max-width: 992px){
+      padding-bottom: 20px;
+    }
+    &__button {
       color: black;
       font-size: 17px;
       font-weight: 500;
       line-height: 140%;
-      padding: 0 65px;
       height: 62px;
       border: 1px solid rgb(0, 0, 0);
+      width: 150px;
 
       &._active {
         background: black;
@@ -103,14 +110,22 @@ onMounted(fetchItems)
     font-weight: 500;
     line-height: 140%;
     padding-bottom: 40px;
+    @media(max-width: 992px){
+      padding-bottom: 20px;
+    }
   }
 
   &-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
     grid-column-gap: 30px;
     grid-row-gap: 50px;
-    padding: 40px 0;
+    padding: 0 0 40px;
+    @media(max-width: 992px){
+      grid-column-gap: 25px;
+      grid-row-gap: 20px;
+      padding: 0 0 20px;
+    }
   }
 }
 
