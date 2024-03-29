@@ -10,7 +10,7 @@ const router = useRouter()
 const schema = yup.object({
   name: yup.string().required("Введите Имя").min(3),
   email: yup.string().required("Введите Почту").email(),
-  password: yup.string().required("Введите Телефон").min(10),
+  tel: yup.string().required("Введите Телефон").min(10),
   country: yup.string().required("Введите Страну").min(3),
   city: yup.string().required("Введите Город").min(3),
   street: yup.string().required("Введите Улицу").min(3),
@@ -23,7 +23,9 @@ function onSubmit() {
   console.log(123)
 }
 
-onMounted(onSubmit)
+onMounted(() => {
+  onSubmit
+})
 
 const {cartBasket, totalPrice} = inject("location")
 
