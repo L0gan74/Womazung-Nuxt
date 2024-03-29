@@ -128,19 +128,19 @@ const cartLenght = cartBasket.value.length
       <NuxtImg src="/img/close.svg" alt="close"/>
     </button>
     <div class="burger-wrapper">
-      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/">
+      <NuxtLink @click="closeBurgerMenu" class="header-nav__link" exact-active-class="_active" to="/">
         Главная
       </NuxtLink>
-      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/shop">
+      <NuxtLink @click="closeBurgerMenu" class="header-nav__link" exact-active-class="_active" to="/shop">
         Магазин
       </NuxtLink>
-      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/brand">
+      <NuxtLink @click="closeBurgerMenu" class="header-nav__link" exact-active-class="_active" to="/brand">
         О бренде
       </NuxtLink>
-      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/contacts">
+      <NuxtLink @click="closeBurgerMenu" class="header-nav__link" exact-active-class="_active" to="/contacts">
         Контакты
       </NuxtLink>
-      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/login">
+      <NuxtLink @click="closeBurgerMenu" class="header-nav__link" exact-active-class="_active" to="/login">
         Авторизация
       </NuxtLink>
       <button class="header-nav__logout" v-if="thereToken" @click="logout" type="submit">Выйти</button>
