@@ -5,6 +5,7 @@ import * as yup from 'yup';
 
 const modal = ref<boolean>(false)
 const backModal = ref<boolean>(false)
+const burgerMenu = ref<boolean>(false)
 
 function openModal() {
   modal.value = true
@@ -40,6 +41,16 @@ function logout() {
   localStorage.removeItem("token")
   localStorage.removeItem("fullName")
   location.reload()
+}
+
+function openBurgerMenu(){
+  burgerMenu.value = true
+  document.body.classList.add("_hidden")
+}
+
+function closeBurgerMenu(){
+  burgerMenu.value = false
+  document.body.classList.remove("_hidden")
 }
 
 const thereToken = localStorage.getItem('token')
@@ -107,11 +118,45 @@ const cartLenght = cartBasket.value.length
         </svg>
 
       </NuxtLink>
-      <button class="header-right__burger" type="button">
+      <button @click="openBurgerMenu" class="header-right__burger" type="button">
         <NuxtImg src="/img/burger.svg" alt="svg"/>
       </button>
     </div>
   </header>
+  <div v-if="burgerMenu" class="burger">
+    <button @click="closeBurgerMenu" class="burger-close" type="button">
+      <NuxtImg src="/img/close.svg" alt="close"/>
+    </button>
+    <div class="burger-wrapper">
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/">
+        Главная
+      </NuxtLink>
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/shop">
+        Магазин
+      </NuxtLink>
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/brand">
+        О бренде
+      </NuxtLink>
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/contacts">
+        Контакты
+      </NuxtLink>
+      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/login">
+        Авторизация
+      </NuxtLink>
+      <button class="header-nav__logout" v-if="thereToken" @click="logout" type="submit">Выйти</button>
+      <button class="header-right__phone _burger" type="button" @click="openModal">
+        <svg width="14.447693" height="14.451538" viewBox="0 0 14.4477 14.4515" fill="none"
+             xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs/>
+          <path id="Vector"
+                d="M13.746 1.88666L11.8528 0L7.92114 3.92519L9.44531 5.49933C9.18988 5.95277 8.63562 6.82143 7.6911 7.76599C6.7464 8.71069 5.8714 9.27122 5.41364 9.53076L3.87036 8.00714L0 11.8545L1.88287 13.7498C2.6026 14.4696 3.69769 14.6561 4.60791 14.214C5.99695 13.5394 8.0932 12.2946 10.192 10.1958C12.2908 8.09705 13.5356 6.00076 14.2102 4.61176C14.3701 4.28261 14.4477 3.9294 14.4477 3.57845C14.4478 2.95872 14.2056 2.34616 13.746 1.88666ZM13.1955 4.11885C12.5587 5.42998 11.3823 7.41017 9.39435 9.3981C7.40643 11.3861 5.42621 12.5625 4.11511 13.1992C3.63708 13.4314 3.06061 13.3321 2.68195 12.9534L1.59521 11.8595L3.87317 9.59512L5.18787 10.8931L5.53961 10.7364C5.5968 10.711 6.95721 10.0954 8.48889 8.56367C10.0216 7.03099 10.6244 5.68207 10.6493 5.62538L10.8018 5.27835L9.50452 3.93857L11.8536 1.59331L12.9489 2.68478C13.3284 3.06482 13.4276 3.64104 13.1955 4.11885Z"
+                fill="#6E9C9F" fill-opacity="1.000000" fill-rule="nonzero"/>
+        </svg>
+        +7 (495) 823-54-12
+      </button>
+    </div>
+  </div>
   <div class="modal" v-if="modal">
     <div class="modal-wrapper">
       <Form @submit="onSubmit" :validation-schema="schema" class="modal-wrapper__form">
@@ -199,22 +244,22 @@ const cartLenght = cartBasket.value.length
 
     &__basket {
       position: relative;
-    }
 
-    &__quantity {
-      position: absolute;
-      right: -10px;
-      top: -10px;
-      border-radius: 50px;
-      background: rgb(153, 142, 120);
-      width: 15px;
-      height: 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 9px;
-      font-weight: 400;
+      &-quantity {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        border-radius: 50px;
+        background: rgb(153, 142, 120);
+        width: 15px;
+        height: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 9px;
+        font-weight: 400;
+      }
     }
 
     &__burger {
@@ -230,6 +275,41 @@ const cartLenght = cartBasket.value.length
   }
 }
 
+.burger {
+  background: white;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  &-close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+
+    img {
+      width: 15px;
+    }
+  }
+
+  &-wrapper {
+    a {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    button {
+      &._burger {
+        display: block;
+      }
+    }
+  }
+}
+
 
 .modal {
   background: rgba(110, 156, 159, 0.631372549);
@@ -240,6 +320,7 @@ const cartLenght = cartBasket.value.length
   display: flex;
   justify-content: center;
   align-items: center;
+
 
   &-wrapper {
     width: 491px;
@@ -284,14 +365,14 @@ const cartLenght = cartBasket.value.length
 
       h3 {
         padding-bottom: 35px;
-        @media(max-width: 768px){
+        @media(max-width: 768px) {
           padding-bottom: 20px;
         }
       }
 
       &-input {
         margin-bottom: 35px;
-        @media(max-width: 768px){
+        @media(max-width: 768px) {
           margin-bottom: 20px;
         }
       }

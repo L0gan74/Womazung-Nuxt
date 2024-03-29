@@ -23,6 +23,8 @@ function onSubmit() {
   console.log(123)
 }
 
+onMounted(onSubmit)
+
 const {cartBasket, totalPrice} = inject("location")
 
 </script>
