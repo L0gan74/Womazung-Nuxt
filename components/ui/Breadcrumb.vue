@@ -13,15 +13,15 @@ defineProps<{
 <template>
   <h1 class="title">{{ title }}</h1>
   <ul class="breadcrumb">
-    <li class="breadcrumb-first">
-      <NuxtLink to="/">
+    <li class="breadcrumb-first text-main">
+      <NuxtLink class="text-main" to="/">
         Главная
       </NuxtLink>
     </li>
     <li> —
-      <NuxtLink :to="`/${categoryLink}`">{{ category }}</NuxtLink>
+      <NuxtLink class="text-main" :to="`/${categoryLink}`">{{ category }}</NuxtLink>
     </li>
-    <li v-if="nameItem"> —
+    <li class="text-main" v-if="nameItem"> —
       {{ nameItem }}
     </li>
 
@@ -50,9 +50,6 @@ defineProps<{
 
   li, a {
     color: rgb(145, 145, 145);
-    font-size: 17px;
-    font-weight: 500;
-    line-height: 140%;
   }
 }
 </style>

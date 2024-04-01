@@ -12,7 +12,7 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
         <NuxtImg class="success-wrapper__successfully-img" src="/img/success.png" alt="img"/>
         <div class="success-wrapper__successfully-text">
           <h3>Заказ успешно оформлен</h3>
-          <p>Мы свяжемся с вами в ближайшее время!</p>
+          <p class="text-main">Мы свяжемся с вами в ближайшее время!</p>
         </div>
       </div>
       <NuxtLink class="success-wrapper__link transparent" to="/">Перейти на главную</NuxtLink>
@@ -53,10 +53,6 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
       }
 
       p {
-        color: black;
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 140%;
         padding-top: 17px;
       }
     }

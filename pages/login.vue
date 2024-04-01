@@ -66,7 +66,6 @@ onMounted(() => {
 <style lang="scss">
 .form {
   width: fit-content;
-  height: auto;
   margin: auto;
   border-radius: 8px;
   border: 1px solid white;

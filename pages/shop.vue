@@ -5,7 +5,9 @@ import axios from "axios";
 import {onMounted} from "vue";
 import type {Category, ItemsCard} from "~/interface/Items";
 import { ref } from 'vue'
+const config = useRuntimeConfig()
 
+const API_URL = config.public.apiBase
 const items = ref<ItemsCard[]>([])
 const loading = ref<boolean>(false)
 const cashe = new Map()
@@ -31,7 +33,7 @@ const fetchItems = async (category = '') => {
     if(cashe.has(category)){
       items.value = cashe.get(category)
     } else{
-      const {data} = await axios.get(`https://30fc9ac5f1c540d7.mokky.dev/items${category}`)
+      const {data} = await axios.get(API_URL + `/items${category}`)
       items.value = data
       cashe.set(category, data)
     }
@@ -50,7 +52,7 @@ onMounted(fetchItems)
   <div class="shop">
     <Breadcrumb title="Магазин" category="Магазин" category-link="shop"/>
     <div class="shop-categories">
-      <button class="shop-categories__button" v-for="category in categories"
+      <button class="shop-categories__button text-main" v-for="category in categories"
               :class="{'_active' : category.isActive}"
               type="button"
               :key="category.id"
@@ -63,11 +65,11 @@ onMounted(fetchItems)
       <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
     </div>
     <div v-else>
-      <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
+      <p class="shop-length text-main">Показано: {{ items.length }} из {{ items.length }} товаров</p>
       <div class="shop-container">
         <Card :items="items"/>
       </div>
-      <p class="shop-length">Показано: {{ items.length }} из {{ items.length }} товаров</p>
+      <p class="shop-length text-main">Показано: {{ items.length }} из {{ items.length }} товаров</p>
     </div>
   </div>
 </template>
@@ -89,10 +91,6 @@ onMounted(fetchItems)
       padding-bottom: 20px;
     }
     &__button {
-      color: black;
-      font-size: 17px;
-      font-weight: 500;
-      line-height: 140%;
       height: 62px;
       border: 1px solid rgb(0, 0, 0);
       width: 150px;
@@ -106,9 +104,6 @@ onMounted(fetchItems)
 
   &-length {
     color: rgb(128, 128, 128);
-    font-size: 17px;
-    font-weight: 500;
-    line-height: 140%;
     padding-bottom: 40px;
     @media(max-width: 992px){
       padding-bottom: 20px;
@@ -125,39 +120,6 @@ onMounted(fetchItems)
       grid-column-gap: 25px;
       grid-row-gap: 20px;
       padding: 0 0 20px;
-    }
-  }
-}
-
-.card {
-  text-align: center;
-
-  &-img {
-    display: block;
-    width: 100%;
-    max-height: 550px;
-    object-fit: cover;
-  }
-
-  &-title {
-    color: black;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 140%;
-    padding: 24px 0 7px;
-  }
-
-  &-price {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    color: rgb(153, 142, 120);
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 140%;
-
-    &__discount {
-      text-decoration-line: line-through;
     }
   }
 }

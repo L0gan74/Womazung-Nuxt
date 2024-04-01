@@ -12,6 +12,7 @@ export interface ItemIdCard {
     oldPrice: string
     img: string
     categories: string
+    description: string
     sizes: string[]
     colors: string[]
 }
