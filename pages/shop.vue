@@ -4,7 +4,8 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 import axios from "axios";
 import {onMounted} from "vue";
 import type {Category, ItemsCard} from "~/interface/Items";
-import { ref } from 'vue'
+import {ref} from 'vue'
+
 const config = useRuntimeConfig()
 
 const API_URL = config.public.apiBase
@@ -30,9 +31,9 @@ const toggleCategory = (selectedCategory: Category) => {
 const fetchItems = async (category = '') => {
   try {
     loading.value = true
-    if(cashe.has(category)){
+    if (cashe.has(category)) {
       items.value = cashe.get(category)
-    } else{
+    } else {
       const {data} = await axios.get(API_URL + `/items${category}`)
       items.value = data
       cashe.set(category, data)
@@ -43,6 +44,8 @@ const fetchItems = async (category = '') => {
     loading.value = false
   }
 }
+
+console.log(items)
 
 onMounted(fetchItems)
 
@@ -65,7 +68,7 @@ onMounted(fetchItems)
       <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
     </div>
     <div v-else>
-      <p class="shop-length text-main">Показано: {{ items.length }} из {{ items.length }} товаров</p>
+      <p class="shop-length text-main">Показано: {{ items.length }} из {{ items.length.valueOf() }} товаров</p>
       <div class="shop-container">
         <Card :items="items"/>
       </div>
@@ -77,7 +80,7 @@ onMounted(fetchItems)
 <style scoped lang="scss">
 .shop {
   margin: 100px 0 130px;
-  @media(max-width: 992px){
+  @media(max-width: 992px) {
     margin: 40px 0 50px;
   }
 
@@ -87,9 +90,10 @@ onMounted(fetchItems)
     gap: 10px;
     overflow-x: auto;
     white-space: nowrap;
-    @media(max-width: 992px){
+    @media(max-width: 992px) {
       padding-bottom: 20px;
     }
+
     &__button {
       height: 62px;
       border: 1px solid rgb(0, 0, 0);
@@ -105,18 +109,18 @@ onMounted(fetchItems)
   &-length {
     color: rgb(128, 128, 128);
     padding-bottom: 40px;
-    @media(max-width: 992px){
+    @media(max-width: 992px) {
       padding-bottom: 20px;
     }
   }
 
   &-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
     grid-column-gap: 30px;
     grid-row-gap: 50px;
     padding: 0 0 40px;
-    @media(max-width: 992px){
+    @media(max-width: 992px) {
       grid-column-gap: 25px;
       grid-row-gap: 20px;
       padding: 0 0 20px;

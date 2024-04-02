@@ -1,27 +1,12 @@
 <script setup lang="ts">
 
-import axios from "axios";
-import {onMounted} from "vue";
 import Swiper from "~/components/home/Swiper.vue";
-import type {ItemsCard} from "~/interface/Items";
-
-const items = ref<ItemsCard[]>([])
-const loading = ref<boolean>(false)
 const config = useRuntimeConfig()
-const API_URL = config.public.apiBase
-const fetchItems = async () => {
-  try {
-    loading.value = true
-    const {data} = await axios.get(API_URL + `/items?limit=3`)
-    items.value = data.items
-  } catch (err) {
-    console.log(err)
-  } finally {
-    loading.value = false
-  }
-}
 
-onMounted(fetchItems)
+
+const API_URL = config.public.apiBase
+
+const {data} = await useFetch(API_URL + `/items?limit=3`)
 
 </script>
 
@@ -37,7 +22,7 @@ onMounted(fetchItems)
   <div class="collection indentation">
     <h2 class="collection-title _title">Новая коллекция</h2>
     <div class="collection-container">
-      <Card :items="items"/>
+      <Card :items="data.items"/>
     </div>
     <NuxtLink class="collection-link transparent" to="/shop">
       Открыть магазин
@@ -81,9 +66,11 @@ onMounted(fetchItems)
       <NuxtImg class="team-container__img" src="/img/team.png" alt="img"/>
       <div class="team-container__text">
         <h3 class="team-container__text-title">Для каждой</h3>
-        <p class="team-container__text-description text-main">Каждая девушка уникальна. Однако, мы схожи в миллионе мелочей.
+        <p class="team-container__text-description text-main">Каждая девушка уникальна. Однако, мы схожи в миллионе
+          мелочей.
         </p>
-        <p class="team-container__text-description text-main">Womazing ищет эти мелочи и создает прекрасные вещи, которые выгодно
+        <p class="team-container__text-description text-main">Womazing ищет эти мелочи и создает прекрасные вещи,
+          которые выгодно
           подчеркивают достоинства каждой
           девушки.</p>
         <NuxtLink class="team-container__text-link text-main" to="/brand">
@@ -280,7 +267,7 @@ onMounted(fetchItems)
         }
       }
 
-      &-link{
+      &-link {
         color: rgb(110, 156, 159);
       }
     }

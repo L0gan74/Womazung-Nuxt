@@ -1,60 +1,38 @@
 <script setup lang="ts">
-import axios from "axios";
+
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
-import type {ItemIdCard} from "~/interface/Items";
-import {ref} from 'vue'
 
 const config = useRuntimeConfig()
-
 const API_URL = config.public.apiBase
-const route = useRoute()
+const {id} = useRoute().params
 
-
-useHead({
-  meta: [
-    {
-      name: 'description', content: `item card id`
-    }
-  ]
-})
-
-const item = ref<ItemIdCard | null>(null)
-const loading = ref<boolean>(false)
-
-const fetchItem = async () => {
-  try {
-    loading.value = true
-    const {data} = await axios.get<ItemIdCard>(API_URL + `/items/${route.params.id}`)
-    item.value = data as ItemIdCard
-    loading.value = false
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-onBeforeMount(fetchItem)
+const {data, pending} = useAsyncData("itemId", () =>
+    $fetch(API_URL + `/items/${id}`)
+)
 
 const {addToCart} = inject("location")
-
 
 </script>
 
 <template>
-  <Breadcrumb category="Магазин" category-link="shop" :name-item="`${item?.name}`"/>
-  <div class="preolader" v-if="loading">
+  <Head>
+    <Meta name="description" :content="data?.description"/>
+  </Head>
+  <Breadcrumb category="Магазин" category-link="shop" :name-item="`${data?.name}`"/>
+  <div class="preolader" v-if="pending">
     <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
   </div>
   <div class="card" v-else>
-    <h1 class="card-title">{{ item?.name }}</h1>
-    <div class="card-wrapper" :key="item?.id">
-      <NuxtImg class="card-img" :src="item?.img" alt="img"/>
+    <h1 class="card-title">{{ data?.name }}</h1>
+    <div class="card-wrapper" :key="data?.id">
+      <NuxtImg class="card-img" :src="data?.img" alt="img"/>
       <div class="card-text">
         <div class="card-text__price">
-          <p>$ {{ item?.price }}</p>
-          <p>{{ item?.oldPrice }}</p>
+          <p>$ {{ data?.price }}</p>
+          <p>{{ data?.oldPrice }}</p>
         </div>
         <h4>Описание</h4>
-        <p class="card-text__description">{{ item?.description }}</p>
+        <p class="card-text__description">{{ data?.description }}</p>
         <!--        <h4>Выберите размер</h4>-->
         <!--        <div class="card-text__size">-->
         <!--          <button class="text-main" type="button"-->
@@ -69,7 +47,7 @@ const {addToCart} = inject("location")
         <!--          <button v-for="color in item?.colors" :key="item" :style="{'background': color}" type="button">-->
         <!--          </button>-->
         <!--        </div>-->
-        <button class="card-text__button btn" type="button" @click="() => addToCart(item)">
+        <button class="card-text__button btn" type="button" @click="() => addToCart(data)">
           Добавить в корзину
         </button>
       </div>
