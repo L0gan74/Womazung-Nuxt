@@ -5,12 +5,8 @@ export interface ItemsCard {
     img: string
 }
 
-export interface ItemIdCard {
-    id: number
-    name: string
-    price: string
+export interface ItemIdCard extends ItemsCard {
     oldPrice: string
-    img: string
     categories: string
     description: string
     sizes: string[]

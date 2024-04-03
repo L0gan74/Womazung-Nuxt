@@ -12,15 +12,6 @@ useHead({
   ]
 })
 
-const nuxtApp = useNuxtApp();
-const loading = ref(false);
-nuxtApp.hook("page:start", () => {
-  loading.value = true;
-});
-nuxtApp.hook("page:finish", () => {
-  loading.value = false;
-});
-
 const cartBasket = ref([])
 
 const addToCart = (item) => {
@@ -54,10 +45,7 @@ provide('location', {
 </script>
 
 <template>
-  <div class="preolader" v-if="loading">
-    <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
-  </div>
-  <NuxtLayout v-else>
-    <NuxtPage/>
+  <NuxtLayout >
+    <RouterView/>
   </NuxtLayout>
 </template>

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
+import type {ItemIdCard} from "~/interface/Items";
 
 const config = useRuntimeConfig()
 const API_URL = config.public.apiBase
 const {id} = useRoute().params
 
-const {data, pending} = useAsyncData("itemId", () =>
+const {data, pending} = useAsyncData("itemId", (): Promise<ItemIdCard> =>
     $fetch(API_URL + `/items/${id}`)
 )
 
