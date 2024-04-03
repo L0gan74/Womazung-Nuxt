@@ -7,11 +7,14 @@ const config = useRuntimeConfig()
 const API_URL = config.public.apiBase
 const {id} = useRoute().params
 
-const {data, pending} = useAsyncData("itemId", (): Promise<ItemIdCard> =>
-    $fetch(API_URL + `/items/${id}`)
+const {data, pending} = useAsyncData("card", (): Promise<ItemIdCard> =>
+    $fetch(`https://30fc9ac5f1c540d7.mokky.dev/items/${id}`)
 )
 
+
 const {addToCart} = inject("location")
+
+console.log(data)
 
 </script>
 

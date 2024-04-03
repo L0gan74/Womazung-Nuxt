@@ -46,6 +46,6 @@ provide('location', {
 
 <template>
   <NuxtLayout >
-    <RouterView/>
+    <NuxtPage/>
   </NuxtLayout>
 </template>

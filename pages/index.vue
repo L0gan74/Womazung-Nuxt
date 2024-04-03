@@ -4,9 +4,15 @@ import Swiper from "~/components/home/Swiper.vue";
 const config = useRuntimeConfig()
 
 
-const API_URL = config.public.apiBase
+const API_LIMIT = config.public.apiLimit
 
-const {data} = await useFetch(API_URL + `/items?limit=3`)
+
+const {data} = await useFetch("https://30fc9ac5f1c540d7.mokky.dev/items?limit=3",{
+  method:"GET",
+  headers:{
+    "Content-Type":"application/json"
+  }
+})
 
 </script>
 

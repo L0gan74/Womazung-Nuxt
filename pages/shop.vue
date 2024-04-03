@@ -45,8 +45,6 @@ const fetchItems = async (category = '') => {
   }
 }
 
-console.log(items)
-
 onMounted(fetchItems)
 
 </script>
@@ -68,7 +66,7 @@ onMounted(fetchItems)
       <NuxtImg class="preolader-gif" src="/preloader/preloader.gif" alt="preloader"/>
     </div>
     <div v-else>
-      <p class="shop-length text-main">Показано: {{ items.length }} из {{ items.length.valueOf() }} товаров</p>
+      <p class="shop-length text-main">Показано: {{ items.length }} из {{ items.length }} товаров</p>
       <div class="shop-container">
         <Card :items="items"/>
       </div>
