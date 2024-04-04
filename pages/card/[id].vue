@@ -8,7 +8,7 @@ const API_URL = config.public.apiBase
 const {id} = useRoute().params
 
 const {data, pending} = useAsyncData("card", (): Promise<ItemIdCard> =>
-    $fetch(`https://30fc9ac5f1c540d7.mokky.dev/items/${id}`)
+    $fetch(API_URL + `/${id}`)
 )
 
 

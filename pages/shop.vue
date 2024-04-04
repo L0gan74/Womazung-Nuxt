@@ -34,7 +34,7 @@ const fetchItems = async (category = '') => {
     if (cashe.has(category)) {
       items.value = cashe.get(category)
     } else {
-      const {data} = await axios.get(API_URL + `/items${category}`)
+      const {data} = await axios.get(API_URL + `/${category}`)
       items.value = data
       cashe.set(category, data)
     }
