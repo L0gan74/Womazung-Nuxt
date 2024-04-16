@@ -27,7 +27,7 @@ onMounted(() => {
   onSubmit
 })
 
-const {cartBasket, totalPrice} = inject("location")
+const {cartBasket, totalPrice} = inject<any>("location")
 
 </script>
 

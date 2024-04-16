@@ -2,6 +2,8 @@
 
 import Breadcrumb from "~/components/ui/Breadcrumb.vue";
 
+const {clearBasket} = inject<any>("location")
+
 </script>
 
 <template>
@@ -15,7 +17,7 @@ import Breadcrumb from "~/components/ui/Breadcrumb.vue";
           <p class="text-main">Мы свяжемся с вами в ближайшее время!</p>
         </div>
       </div>
-      <NuxtLink class="success-wrapper__link transparent" to="/">Перейти на главную</NuxtLink>
+      <NuxtLink class="success-wrapper__link transparent" @click="clearBasket" to="/">Перейти на главную</NuxtLink>
     </div>
   </div>
 </template>

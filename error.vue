@@ -12,7 +12,7 @@ const handleError = () => clearError({redirect: '/'})
   <div class="error">
     <div class="error-wrapper">
       <h2 class="error-wrapper__text">К сожалению страница не найдена или она не работает :(</h2>
-      <h3 class="error-wrapper__error">{{ error.statusCode }}</h3>
+      <!-- <h3 class="error-wrapper__error">{{ error.statusCode }}</h3> -->
       <NuxtLink class="error-wrapper__link" to="/">Главная</NuxtLink>
     </div>
   </div>

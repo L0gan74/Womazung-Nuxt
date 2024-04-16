@@ -31,7 +31,7 @@ const submitForm = () => {
       .then(response => {
         localStorage.setItem("token", response.data.token)
         localStorage.setItem("user", response.data.fullName)
-        router.push('/')
+        location.reload()
       })
       .catch(err => {
         console.log(err)

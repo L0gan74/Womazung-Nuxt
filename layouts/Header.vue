@@ -57,6 +57,8 @@ const thereToken = localStorage.getItem('token')
 const {cartBasket} = inject("location")
 const cartLenght = cartBasket.value.length
 
+console.log(cartLenght)
+
 </script>
 
 <template>
@@ -77,10 +79,11 @@ const cartLenght = cartBasket.value.length
       <NuxtLink class="header-nav__link" exact-active-class="_active" to="/contacts">
         Контакты
       </NuxtLink>
-      <NuxtLink class="header-nav__link" exact-active-class="_active" to="/login">
+      <button class="header-nav__logout" v-if="thereToken" @click="logout" type="submit">Выйти</button>
+
+      <NuxtLink v-else class="header-nav__link" exact-active-class="_active" to="/login">
         Авторизация
       </NuxtLink>
-      <button class="header-nav__logout" v-if="thereToken" @click="logout" type="submit">Выйти</button>
     </nav>
     <div class="header-right">
       <button class="header-right__phone" type="button" @click="openModal">

@@ -12,9 +12,7 @@ const {data, pending} = useAsyncData("card", (): Promise<ItemIdCard> =>
 )
 
 
-const {addToCart} = inject("location")
-
-console.log(data)
+const {addToCart} = inject<any>("location")
 
 </script>
 
@@ -37,20 +35,6 @@ console.log(data)
         </div>
         <h4>Описание</h4>
         <p class="card-text__description">{{ data?.description }}</p>
-        <!--        <h4>Выберите размер</h4>-->
-        <!--        <div class="card-text__size">-->
-        <!--          <button class="text-main" type="button"-->
-        <!--                  v-for="size in item?.sizes"-->
-        <!--                  :key="size"-->
-        <!--          >-->
-        <!--            {{ size }}-->
-        <!--          </button>-->
-        <!--        </div>-->
-        <!--        <h4>Выберите цвет</h4>-->
-        <!--        <div class="card-text__colors">-->
-        <!--          <button v-for="color in item?.colors" :key="item" :style="{'background': color}" type="button">-->
-        <!--          </button>-->
-        <!--        </div>-->
         <button class="card-text__button btn" type="button" @click="() => addToCart(data)">
           Добавить в корзину
         </button>

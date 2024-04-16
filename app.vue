@@ -23,7 +23,6 @@ const addToCart = (item) => {
     cartBasket.value.push(item)
     alert("Товар добавлен в корзину")
   }
-  console.log(cartBasket)
 }
 
 const removeFromCart = (item) => {
@@ -38,8 +37,12 @@ const totalPrice = computed(() =>
     cartBasket.value.reduce((acc, item) => acc + Number(item.price), 0)
 )
 
+const clearBasket = () => {
+  cartBasket.value = []
+}
+
 provide('location', {
-  addToCart, cartBasket, removeFromCart, totalPrice
+  addToCart, cartBasket, removeFromCart, totalPrice, clearBasket
 })
 
 </script>
